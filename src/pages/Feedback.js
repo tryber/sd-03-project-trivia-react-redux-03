@@ -16,11 +16,19 @@ const feedackMessage = (assertions) => {
 class Feedback extends React.Component {
   constructor() {
     super();
-    this.setState({ player: localStorage.getItem('state') });
+    this.state = { state: {} };
+    // this.state = { player: {
+    //   name: 'André',
+    //   assertions: 3,
+    //   score: 80,
+    //   gravatarEmail: 'potew0@gmail.com'
+    //   }
+    // };
   }
 
   render() {
-    const { assertions, score } = this.state.player;
+    const { assertions, score } = JSON.parse(localStorage.getItem('state')).player;
+
     return (
       <div>
         {<Header />}

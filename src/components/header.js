@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ls = localStorage.getItem('state');
+const { name, score } = JSON.parse(localStorage.getItem('state')).player;
 const token = localStorage.getItem('token');
 
 function Header() {
@@ -11,8 +11,8 @@ function Header() {
         data-testid="header-profile-picture"
         src={`https://www.gravatar.com/avatar/${token}`}
       />
-      <h5 data-testid="header-player-name">Jogador: {ls.player.name}</h5>
-      <h5 data-testid="header-score">Pontos: {ls.player.score}</h5>
+      <h5 data-testid="header-player-name">Jogador: {name}</h5>
+      <h5 data-testid="header-score">Pontos: {score}</h5>
     </div>
   );
 }
