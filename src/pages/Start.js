@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { tokenPlayer } from '../services/api';
 
 class Start extends React.Component {
   constructor(props) {
@@ -12,9 +13,15 @@ class Start extends React.Component {
     }
     this.onChangeEmailValue = this.onChangeEmailValue.bind(this);
     this.onChangeNameValue = this.onChangeNameValue.bind(this);
+    this.onClickToPlay = this.onClickToPlay.bind(this);
   }
 
- onChangeEmailValue(event) {
+  onClickToPlay() {
+    this.setState({ redirectScreenPlay: true });
+    tokenPlayer().then((item) => console.log(item))
+  }
+
+  onChangeEmailValue(event) {
     const { value } = event.target;
     const { name } = this.state;
     this.setState({ email: value });
@@ -32,41 +39,44 @@ class Start extends React.Component {
     if (value !== '' && email !== '') {
       this.setState({ buttonDisbled: false });
     } else {
-      this.setState({ buttonDisbled: true});
+      this.setState({ buttonDisbled: true });
     }
   }
 
   render() {
-    const { buttonDisbled } = this.state;
+    const { buttonDisbled, redirectScreenPlay } = this.state;
+
+    if (redirectScreenPlay) {
+      return <Redirect to={`/play`} />;
+    }
+
     return (
       <div>
-        <form>
-          <label htmlFor="email">
-            Email:
+        <label htmlFor="email">
+          Email:
             <input
-              name="email"
-              type="email"
-              data-testid="input-gravatar-email"
-              onChange={this.onChangeEmailValue}
-            />
-          </label>
-          <label htmlFor="name">
-            Nome:
+            name="email"
+            type="email"
+            data-testid="input-gravatar-email"
+            onChange={this.onChangeEmailValue}
+          />
+        </label>
+        <label htmlFor="name">
+          Nome:
             <input
             name="name"
             type="text"
             data-testid="input-player-name"
             onChange={this.onChangeNameValue}
-            />
-          </label>
-          <button
-            data-testid="btn-play"
-            disabled={buttonDisbled}
-            onClick={this.onClickPlay}
-          >
-            Jogar
+          />
+        </label>
+        <button
+          data-testid="btn-play"
+          disabled={buttonDisbled}
+          onClick={this.onClickToPlay}
+        >
+          Jogar
         </button>
-        </form>
         <div>
           <Link data-testid="btn-settings" to="/settings">Configurações</Link>
         </div>
