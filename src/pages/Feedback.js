@@ -28,7 +28,7 @@ class Feedback extends React.Component {
 
   render() {
     const { assertions, score } = JSON.parse(localStorage.getItem('state')).player;
-;
+
     return (
       <div>
         {<Header />}
