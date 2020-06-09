@@ -18,7 +18,7 @@ class Start extends React.Component {
 
   onClickToPlay() {
     this.setState({ redirectScreenPlay: true });
-    tokenPlayer().then((item) => console.log(item))
+    tokenPlayer().then((item) => console.log(item));
   }
 
   onChangeEmailValue(event) {
@@ -43,6 +43,54 @@ class Start extends React.Component {
     }
   }
 
+  labelEmail() {
+    return (
+      <label htmlFor="email">
+        Email:
+        <input
+          name="email"
+          type="email"
+          data-testid="input-gravatar-email"
+          onChange={this.onChangeEmailValue}
+        />
+      </label>
+    );
+  }
+
+  labelName() {
+    return (
+      <label htmlFor="name">
+        Nome:
+        <input
+          name="name"
+          type="text"
+          data-testid="input-player-name"
+          onChange={this.onChangeNameValue}
+        />
+      </label>
+    );
+  }
+
+  buttonPlay(buttonDisbled) {
+    return (
+      <button
+        data-testid="btn-play"
+        disabled={buttonDisbled}
+        onClick={this.onClickToPlay}
+      >
+        Jogar
+      </button>
+    );
+  }
+
+  linkSettings() {
+    return (
+      <div>
+        <Link data-testid="btn-settings" to="/settings">Configurações</Link>
+      </div>
+    );
+  }
+
   render() {
     const { buttonDisbled, redirectScreenPlay } = this.state;
 
@@ -52,34 +100,10 @@ class Start extends React.Component {
 
     return (
       <div>
-        <label htmlFor="email">
-          Email:
-            <input
-            name="email"
-            type="email"
-            data-testid="input-gravatar-email"
-            onChange={this.onChangeEmailValue}
-          />
-        </label>
-        <label htmlFor="name">
-          Nome:
-            <input
-            name="name"
-            type="text"
-            data-testid="input-player-name"
-            onChange={this.onChangeNameValue}
-          />
-        </label>
-        <button
-          data-testid="btn-play"
-          disabled={buttonDisbled}
-          onClick={this.onClickToPlay}
-        >
-          Jogar
-        </button>
-        <div>
-          <Link data-testid="btn-settings" to="/settings">Configurações</Link>
-        </div>
+        {this.labelEmail()}
+        {this.labelName()}
+        {this.buttonPlay(buttonDisbled)}
+        {this.linkSettings()}
       </div>
     );
   }
