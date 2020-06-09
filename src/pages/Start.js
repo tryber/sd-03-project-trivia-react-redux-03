@@ -19,7 +19,8 @@ class Start extends React.Component {
 
   onClickToPlay() {
     this.setState({ redirectScreenPlay: true });
-    tokenPlayer().then((item) => console.log(item));
+    tokenPlayer()
+      .then((item) => localStorage.setItem('token', item));
   }
 
   onChangeEmailValue(event) {
