@@ -2,21 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/header';
 
+const feedackMessage = (assertions) => {
+  switch (assertions) {
+    case (assertions < 3):
+      return (<h1>Podia ser melhor...</h1>);
+    case (assertions >= 3):
+      return (<h1>Mandou bem!</h1>);
+    default:
+      return '';
+  }
+}
+
 class Feedback extends React.Component {
   constructor() {
     super();
     this.setState({ player: localStorage.getItem('state') });
-  }
-
-  feedackMessage(assertions) {
-    switch (assertions) {
-      case (assertions < 3):
-        return (<h1>Podia ser melhor...</h1>);
-      case (assertions >= 3):
-        return (<h1>Mandou bem!</h1>);
-      default:
-        return '';
-    }
   }
 
   render() {
@@ -24,7 +24,7 @@ class Feedback extends React.Component {
     return (
       <div>
         {<Header />}
-        <div data-testid="feedback-text">{this.feedackMessage(assertions)}</div>
+        <div data-testid="feedback-text">{feedackMessage(assertions)}</div>
         <div data-testid="feedback-total-question">Você acertou {assertions} questões!</div>
         <div data-testid="feedback-total-score">Um total de {score} pontos.</div>
         <Link to="/ranking">
