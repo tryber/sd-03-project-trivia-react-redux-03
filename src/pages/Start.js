@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenPlayer } from '../services/api';
+import tokenPlayer  from '../services/api';
 import { Link, Redirect } from 'react-router-dom';
 
 
@@ -88,7 +88,7 @@ class Start extends React.Component {
     const { buttonDisbled, redirectScreenPlay } = this.state;
 
     if (redirectScreenPlay) {
-      return <Redirect to={`/play`} />;
+      return <Redirect to="/play" />;
     }
 
     return (
