@@ -6,7 +6,7 @@ class Feedback extends React.Component {
   constructor() {
     super();
     this.setState({ player: localStorage.getItem('state') });
-  };
+  }
 
   feedackMessage(assertions) {
     switch (assertions) {
@@ -15,7 +15,7 @@ class Feedback extends React.Component {
       case (assertions >= 3):
         return (<h1>Mandou bem!</h1>);
       default:
-        break;
+        return '';
     }
   }
 
