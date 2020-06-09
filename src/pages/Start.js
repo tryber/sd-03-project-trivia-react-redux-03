@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { tokenPlayer } from '../services/api';
+import { Link, Redirect } from 'react-router-dom';
+
 
 class Start extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Start extends React.Component {
       name: '',
       buttonDisbled: true,
       redirectScreenPlay: false,
-    }
+    };
     this.onChangeEmailValue = this.onChangeEmailValue.bind(this);
     this.onChangeNameValue = this.onChangeNameValue.bind(this);
     this.onClickToPlay = this.onClickToPlay.bind(this);
@@ -83,14 +84,6 @@ class Start extends React.Component {
     );
   }
 
-  linkSettings() {
-    return (
-      <div>
-        <Link data-testid="btn-settings" to="/settings">Configurações</Link>
-      </div>
-    );
-  }
-
   render() {
     const { buttonDisbled, redirectScreenPlay } = this.state;
 
@@ -103,7 +96,9 @@ class Start extends React.Component {
         {this.labelEmail()}
         {this.labelName()}
         {this.buttonPlay(buttonDisbled)}
-        {this.linkSettings()}
+        <div>
+          <Link data-testid="btn-settings" to="/settings">Configurações</Link>
+        </div>
       </div>
     );
   }
