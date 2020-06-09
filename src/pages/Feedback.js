@@ -11,7 +11,7 @@ const feedackMessage = (assertions) => {
     default:
       return '';
   }
-}
+};
 
 class Feedback extends React.Component {
   constructor() {
