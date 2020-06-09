@@ -5,7 +5,7 @@ import Header from '../components/header';
 class Feedback extends React.Component {
   constructor() {
     super();
-    this.state = { player: localStorage.getItem('state') }
+    this.setState({ player: localStorage.getItem('state') });
   };
 
   feedackMessage(assertions) {
@@ -20,7 +20,6 @@ class Feedback extends React.Component {
   }
 
   render() {
-    this.setState({ player:  });
     const { assertions, score } = this.state.player;
     return (
       <div>
