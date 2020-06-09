@@ -1,6 +1,6 @@
 import React from 'react';
-import tokenPlayer  from '../services/api';
 import { Link, Redirect } from 'react-router-dom';
+import tokenPlayer from '../services/api';
 
 
 class Start extends React.Component {
