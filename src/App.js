@@ -5,6 +5,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Start from './pages/Start';
+import Settings from './pages/Settings';
 import './App.css';
 
 class App extends React.Component {
@@ -14,10 +15,12 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Start} />
+            <Route path="/settings" component={Settings} />
           </Switch>
         </Router>
       </div>
     );
   }
 }
+
 export default App;
