@@ -1,34 +1,26 @@
 import React from 'react';
-import Header from '../components/header';
 import { Link } from 'react-router-dom';
+import Header from '../components/header';
 
 class Feedback extends React.Component {
-  constructor(props) {
-    this.state = { 
-        player: {
-          name: '',
-          assertions: '',
-          score: '',
-          gravatarEmail: '',
-        }
-    };
-  }
-  componentDidMount() {
-    this.setState({ player: localStorage.getItem('state') })
-  }
-  
+  constructor() {
+    super();
+    this.state = { player: localStorage.getItem('state') }
+  };
+
   feedackMessage(assertions) {
     switch (assertions) {
       case (assertions < 3):
-        return(<h1>Podia ser melhor...</h1>);
+        return (<h1>Podia ser melhor...</h1>);
       case (assertions >= 3):
-        return(<h1>Mandou bem!</h1>);
+        return (<h1>Mandou bem!</h1>);
       default:
         break;
     }
   }
 
   render() {
+    this.setState({ player:  });
     const { assertions, score } = this.state.player;
     return (
       <div>
@@ -43,7 +35,7 @@ class Feedback extends React.Component {
           <button data-testid="btn-play-again">Jogar Novamente</button>
         </Link>
       </div>
-    )
+    );
   }
 }
 

@@ -6,6 +6,7 @@ function Header() {
   return (
     <div className="header">
       <img
+        alt="Imagem de avatar do jogador"
         data-testid="header-profile-picture"
         src=""
       />

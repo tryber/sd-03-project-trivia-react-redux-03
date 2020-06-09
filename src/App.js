@@ -11,11 +11,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-       <Router>
-         <Switch>
-           <Route exact path="/" component={Start} />
-         </Switch>
-       </Router>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Start} />
+          </Switch>
+        </Router>
       </div>
     );
   }
