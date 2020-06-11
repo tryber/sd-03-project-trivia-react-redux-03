@@ -13,6 +13,7 @@ class Start extends React.Component {
       name: "",
       buttonDisbled: true,
       redirectScreenPlay: false,
+      teste: '',
     };
     this.onChangeEmailValue = this.onChangeEmailValue.bind(this);
     this.onChangeNameValue = this.onChangeNameValue.bind(this);
