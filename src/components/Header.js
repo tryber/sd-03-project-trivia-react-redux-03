@@ -19,6 +19,7 @@ class Header extends React.Component {
           src={`https://www.gravatar.com/avatar/${emailHash}`}
         />
         <p data-testid="header-player-name">{name}</p>
+        <p data-testid="header-score">Placar:</p>
       </div>
     );
   }

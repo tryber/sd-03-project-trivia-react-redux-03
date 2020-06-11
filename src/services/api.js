@@ -12,5 +12,3 @@ export async function triviaAPI() {
     .then((response) => response.json())
     .then((respJSON) => respJSON.results);
 }
-
-// export default tokenPlayer;
