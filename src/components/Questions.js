@@ -10,7 +10,7 @@ class Questions extends React.Component {
     this.state = {
       isLoading: true,
       questions: [],
-    }
+    };
   }
 
   componentDidMount() {
@@ -19,8 +19,8 @@ class Questions extends React.Component {
       this.setState({
         isLoading: false,
         questions,
-      })
-    })
+      });
+    });
   }
 
   questionsContent() {
@@ -31,8 +31,8 @@ class Questions extends React.Component {
         <h3 data-testid="question-category">Categoria: {answer.category}</h3>
         <h3 data-testid="question-text">Questão: {answer.question}</h3>
         <button data-testid="correct-answer">{answer.correct_answer}</button>
-        {answer.incorrect_answers.map((answer, index) =>
-          <button data-testid={`wrong-answer-${index}`} key={index}>{answer}</button>)}
+        {answer.incorrect_answers.map((alternative, index) =>
+          <button data-testid={`wrong-answer-${index}`} key={alternative}>{alternative}</button>)}
 
       </div>
     );
@@ -40,7 +40,7 @@ class Questions extends React.Component {
 
   render() {
     const { isLoading } = this.state;
-    if (isLoading) return <Loading />
+    if (isLoading) return <Loading />;
     return (
       <div>
         {this.questionsContent()}
