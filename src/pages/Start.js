@@ -42,7 +42,7 @@ class Start extends React.Component {
     const { value } = event.target;
     const { email } = this.state;
     this.setState({ name: value });
-    if (value !== '' && email !== '' {
+    if (value !== '' && email !== '') {
       this.setState({ buttonDisbled: false });
     } else {
       this.setState({ buttonDisbled: true });
