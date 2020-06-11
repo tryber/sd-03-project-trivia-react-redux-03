@@ -10,7 +10,7 @@ export async function tokenPlayer() {
 export async function triviaAPI() {
   return fetch(urlTrivia)
     .then((response) => response.json())
-    .then((respJSON => respJSON.results));
+    .then((respJSON) => respJSON.results);
 }
 
 // export default tokenPlayer;

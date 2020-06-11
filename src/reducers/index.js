@@ -1,14 +1,14 @@
-import { combineReducers } from "redux";
-import { BOOL_QUESTION, MULT_QUESTION } from "../actions";
+import { combineReducers } from 'redux';
+import { BOOL_QUESTION, MULT_QUESTION } from '../actions';
 
 const USER_INFO = 'USER_INFO';
 
 const defaultStateUserInfo = {
-  name: "",
-  email: "",
+  name: '',
+  email: '',
 };
 
-const type = "multiple";
+const type = 'multiple';
 
 const userInfo = (state = defaultStateUserInfo, action) => {
   switch (action.type) {

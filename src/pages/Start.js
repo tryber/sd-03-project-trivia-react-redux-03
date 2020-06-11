@@ -1,19 +1,18 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import { tokenPlayer } from "../services/api";
-import { userInfo } from "../actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { tokenPlayer } from '../services/api';
+import { userInfo } from '../actions';
 
 class Start extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      name: "",
+      email: '',
+      name: '',
       buttonDisbled: true,
       redirectScreenPlay: false,
-      teste: '',
     };
     this.onChangeEmailValue = this.onChangeEmailValue.bind(this);
     this.onChangeNameValue = this.onChangeNameValue.bind(this);
@@ -22,17 +21,17 @@ class Start extends React.Component {
 
   onClickToPlay() {
     const { name, email } = this.state;
-    const { userInfo } = this.props;
-    userInfo(name, email);
+    const { user } = this.props;
+    user(name, email);
     this.setState({ redirectScreenPlay: true });
-    tokenPlayer().then((item) => localStorage.setItem("token", item));
+    tokenPlayer().then((item) => localStorage.setItem('token', item));
   }
 
   onChangeEmailValue(event) {
     const { value } = event.target;
     const { name } = this.state;
     this.setState({ email: value });
-    if (value !== "" && name !== "") {
+    if (value !== '' && name !== '') {
       this.setState({ buttonDisbled: false });
     } else {
       this.setState({ buttonDisbled: true });
@@ -43,7 +42,7 @@ class Start extends React.Component {
     const { value } = event.target;
     const { email } = this.state;
     this.setState({ name: value });
-    if (value !== "" && email !== "") {
+    if (value !== '' && email !== '' {
       this.setState({ buttonDisbled: false });
     } else {
       this.setState({ buttonDisbled: true });
@@ -113,15 +112,15 @@ class Start extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  userInfo: (name, email) => dispatch(userInfo(name, email)),
+  user: (name, email) => dispatch(userInfo(name, email)),
 });
 
 const mapStateToProps = (state) => ({
   name: state.userInfo.name,
-})
+});
 
 Start.propTypes = {
-  userInfo: PropTypes.func.isRequired,
+  user: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Start);

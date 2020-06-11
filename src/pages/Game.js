@@ -27,7 +27,7 @@ class Game extends React.Component {
         <p>Carregando perguntas...</p>}
       </div>
     );
-  };
+  }
 }
 
 
