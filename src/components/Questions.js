@@ -33,7 +33,6 @@ class Questions extends React.Component {
         <button data-testid="correct-answer">{answer.correct_answer}</button>
         {answer.incorrect_answers.map((alternative, index) =>
           <button data-testid={`wrong-answer-${index}`} key={alternative}>{alternative}</button>)}
-
       </div>
     );
   }
