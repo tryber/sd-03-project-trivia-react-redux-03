@@ -7,7 +7,8 @@ import Loading from './Loading';
 import Feedback from '../pages/Feedback';
 import '../App.css';
 
-function arrayRandom(array, max) {
+function arrayRandom(array, maxRandom) {
+  let max = maxRandom;
   let indexRandom = Math.floor(Math.random() * max);
   const arrayLength = array.length;
   let newArray = [];
@@ -41,7 +42,7 @@ class Questions extends React.Component {
     let arrayItem = [];
     triviaAPI().then((questions) => {
       questions.forEach((item) => {
-        arrayItem = [item.correct_answer, ...item.incorrect_answers]
+        arrayItem = [item.correct_answer, ...item.incorrect_answers];
         arrayAnswers = [...arrayAnswers, arrayRandom(arrayItem, arrayItem.length)];
       });
       this.setState({
