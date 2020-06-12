@@ -7,8 +7,7 @@ import Loading from './Loading';
 import Feedback from '../pages/Feedback';
 import '../App.css';
 
-function arrayRandom(array) {
-  let max = 4;
+function arrayRandom(array, max) {
   let indexRandom = Math.floor(Math.random() * max);
   const arrayLength = array.length;
   let newArray = [];
@@ -29,6 +28,7 @@ class Questions extends React.Component {
       score: 0,
       isLoading: true,
       questions: [],
+      arrayAnswers: [],
       remainingTime: 30,
       finishedQuestion: false,
       styleCorrectAnswer: {},
@@ -37,10 +37,17 @@ class Questions extends React.Component {
   }
 
   componentDidMount() {
+    let arrayAnswers = [];
+    let arrayItem = [];
     triviaAPI().then((questions) => {
+      questions.forEach((item) => {
+        arrayItem = [item.correct_answer, ...item.incorrect_answers]
+        arrayAnswers = [...arrayAnswers, arrayRandom(arrayItem, arrayItem.length)];
+      });
       this.setState({
         isLoading: false,
         questions,
+        arrayAnswers,
       });
     });
   }
@@ -52,6 +59,7 @@ class Questions extends React.Component {
       finishedQuestion: false,
       styleCorrectAnswer: {},
       styleIncorrectAnswer: {},
+      remainingTime: 30,
     });
   }
 
@@ -137,11 +145,10 @@ class Questions extends React.Component {
   }
 
   generateOptions(type, correctAnswer, incorrectAnswers, diffLevel) {
-    const arrayAnswers = [...incorrectAnswers, correctAnswer];
-    const randomAnswers = arrayRandom(arrayAnswers);
+    const { arrayAnswers, currentQuestion } = this.state;
     if (type === 'multiple') {
       return (
-        randomAnswers.map((answer, index) => {
+        arrayAnswers[currentQuestion].map((answer, index) => {
           if (answer === correctAnswer) {
             return this.buttonCorrect(answer, diffLevel);
           }
@@ -170,19 +177,20 @@ class Questions extends React.Component {
     );
   }
 
-  time(remainingTime) {
-   if (remainingTime > 0) {
-    setTimeout(() => {
-      this.setState({ remainingTime: remainingTime - 1})
-    }, 1000);
-   }
+  time() {
+    const { remainingTime } = this.state;
+    if (remainingTime > 0) {
+      setTimeout(() => {
+        this.setState({ remainingTime: remainingTime - 1 });
+      }, 1000);
+    }
     return (
       <p>Tempo restante: {remainingTime}</p>
     );
   }
 
   render() {
-    const { currentQuestion, remainingTime, isLoading } = this.state;
+    const { currentQuestion, isLoading } = this.state;
     if (isLoading) {
       return <Loading />;
     } else if (currentQuestion === 5) {
@@ -190,7 +198,7 @@ class Questions extends React.Component {
     } return (
       <div>
         {this.displayQuestion()}
-        {this.time(remainingTime)}
+        {this.time()}
         <button
           className="btn-next"
           data-testid="btn-next"
@@ -204,10 +212,6 @@ class Questions extends React.Component {
 Questions.propTypes = {
   addScore: PropTypes.func.isRequired,
 };
-
-// setTimeout(() => {
-//   this.decremenTime(remainingTime);
-// }, 1000);
 
 const mapDispatchToProps = (dispatch) => ({
   addScore: (event) => dispatch(scoreReducer(event)),
