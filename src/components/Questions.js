@@ -45,6 +45,16 @@ class Questions extends React.Component {
     });
   }
 
+  onClickNext() {
+    const { currentQuestion } = this.state;
+    this.setState({
+      currentQuestion: currentQuestion + 1,
+      finishedQuestion: false,
+      styleCorrectAnswer: {},
+      styleIncorrectAnswer: {},
+    });
+  }
+
   selectCorrectAnswer(level) {
     this.setState({
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
@@ -158,16 +168,6 @@ class Questions extends React.Component {
         {this.generateOptions(type, correct_answer, incorrect_answers, difficulty)}
       </div>
     );
-  }
-
-  onClickNext() {
-    const { currentQuestion } = this.state;
-    this.setState({
-      currentQuestion: currentQuestion + 1,
-      finishedQuestion: false,
-      styleCorrectAnswer: {},
-      styleIncorrectAnswer: {},
-    });
   }
 
   decremenTime(time) {
