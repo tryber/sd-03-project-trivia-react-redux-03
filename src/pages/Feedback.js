@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 
 const feedackMessage = (assertions) => {
   switch (assertions) {
@@ -17,13 +17,6 @@ class Feedback extends React.Component {
   constructor() {
     super();
     this.state = { state: {} };
-    // this.state = { player: {
-    //   name: 'André',
-    //   assertions: 3,
-    //   score: 80,
-    //   gravatarEmail: 'potew0@gmail.com'
-    //   }
-    // };
   }
 
   render() {
@@ -31,7 +24,6 @@ class Feedback extends React.Component {
 
     return (
       <div>
-        {<Header />}
         <div data-testid="feedback-text">{feedackMessage(assertions)}</div>
         <div data-testid="feedback-total-question">Você acertou {assertions} questões!</div>
         <div data-testid="feedback-total-score">Um total de {score} pontos.</div>

@@ -22,9 +22,18 @@ class Start extends React.Component {
   onClickToPlay() {
     const { name, email } = this.state;
     const { user } = this.props;
+    const playerInfo = { 
+      "player": {
+        "name": name,
+        "assertions": 0,
+        "score": 0,
+        "gravatarEmail": email,
+      }
+    };
     user(name, email);
     this.setState({ redirectScreenPlay: true });
     tokenPlayer().then((item) => localStorage.setItem('token', item));
+    localStorage.setItem('state', JSON.stringify(playerInfo));
   }
 
   onChangeEmailValue(event) {
@@ -83,6 +92,7 @@ class Start extends React.Component {
         data-testid="btn-play"
         disabled={buttonDisbled}
         onClick={this.onClickToPlay}
+        type="submit"
       >
         Jogar
       </button>

@@ -1,6 +1,5 @@
 export const USER_INFO = 'USER_INFO';
-export const BOOL_QUESTION = 'BOOL_QUESTION';
-export const MULT_QUESTION = 'MULT_QUESTION';
+export const ADD_SCORE = 'ADD_SCORE';
 
 export const userInfo = (name, email) => ({
   type: USER_INFO,
@@ -8,12 +7,7 @@ export const userInfo = (name, email) => ({
   email,
 });
 
-export const multipleChoice = (question) => ({
-  type: MULT_QUESTION,
-  question,
-});
-
-export const dualChoice = (question) => ({
-  type: BOOL_QUESTION,
-  question,
+export const scoreReducer = (points) => ({
+  type: ADD_SCORE,
+  points,
 });

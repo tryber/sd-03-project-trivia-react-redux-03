@@ -9,7 +9,7 @@ function cryptEmailMD5(data) {
 
 class Header extends React.Component {
   render() {
-    const { name, email } = this.props;
+    const { name, email, score } = this.props;
     const emailHash = cryptEmailMD5(email);
     return (
       <div className="header">
@@ -17,9 +17,10 @@ class Header extends React.Component {
           alt="Imagem de avatar do jogador"
           data-testid="header-profile-picture"
           src={`https://www.gravatar.com/avatar/${emailHash}`}
+          width="50px"
         />
-        <p data-testid="header-player-name">{name}</p>
-        <p data-testid="header-score">Placar:</p>
+        <p data-testid="header-player-name">Jogador: {name}</p>
+        <p data-testid="header-score">Pontos: {score}</p>
       </div>
     );
   }
@@ -28,6 +29,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   name: state.userInfo.name,
   email: state.userInfo.email,
+  score: state.scoreReducer.score,
 });
 
 Header.propTypes = {

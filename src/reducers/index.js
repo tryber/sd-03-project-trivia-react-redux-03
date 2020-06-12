@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { BOOL_QUESTION, MULT_QUESTION } from '../actions';
+import { ADD_SCORE } from '../actions';
 
 const USER_INFO = 'USER_INFO';
 
@@ -8,7 +8,7 @@ const defaultStateUserInfo = {
   email: '',
 };
 
-const type = 'multiple';
+const initialScore = 0;
 
 const userInfo = (state = defaultStateUserInfo, action) => {
   switch (action.type) {
@@ -23,21 +23,18 @@ const userInfo = (state = defaultStateUserInfo, action) => {
   }
 };
 
-const questionReducer = (state = type, action) => {
+const scoreReducer = (state = initialScore, action) => {
   switch (action.type) {
-    case BOOL_QUESTION:
+    case ADD_SCORE:
       return {
-        options: ['a', 'b'],
-      };
-    case MULT_QUESTION:
-      return {
-        options: ['a', 'b', 'c', 'd'],
+        ...state,
+        score: action.points,
       };
     default:
       return state;
   }
 };
 
-const rootReducer = combineReducers({ userInfo, questionReducer });
+const rootReducer = combineReducers({ userInfo, scoreReducer });
 
 export default rootReducer;
