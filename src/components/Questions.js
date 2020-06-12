@@ -77,7 +77,7 @@ class Questions extends React.Component {
                 disabled={this.state.finishedQuestion}
                 onClick={() => this.selectCorrectAnswer(diffLevel)}
               >{answer.text}
-              </button>)
+              </button>);
           }
           return (
             <button
@@ -89,14 +89,12 @@ class Questions extends React.Component {
             </button>);
         }));
     } return (
-        <ul>
-          <button onClick={() => this.selectCorrectAnswer()}>{correct}</button>
-          <button onClick={() => this.selectWrongAnswer(false)}>{wrong}</button>
-        </ul>
-      );
-    }
-  
-
+      <ul>
+        <button onClick={() => this.selectCorrectAnswer()}>{correct}</button>
+        <button onClick={() => this.selectWrongAnswer(false)}>{wrong}</button>
+      </ul>
+    );
+  }
 
   displayQuestion() {
     const { currentQuestion, questions } = this.state;

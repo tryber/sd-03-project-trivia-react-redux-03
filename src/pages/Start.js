@@ -24,7 +24,7 @@ class Start extends React.Component {
     const { user } = this.props;
     const playerInfo = {
       player: {
-        name: name,
+        name,
         assertions: 0,
         score: 0,
         gravatarEmail: email,
