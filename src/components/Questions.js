@@ -7,16 +7,15 @@ import Loading from './Loading';
 import Feedback from '../pages/Feedback';
 
 function arrayRandom(array) {
-  const min = 0;
   let max = 4;
-  let indexRandom = Math.floor(Math.random() * (max - min) + min);
+  let indexRandom = Math.floor(Math.random() * max);
   const arrayLength = array.length;
   let newArray = [];
   for (let i = 0; i < arrayLength; i += 1) {
     newArray = [...newArray, array[indexRandom]];
     array.splice(indexRandom, 1);
     max -= 1;
-    indexRandom = Math.floor(Math.random() * (max - min) + min);
+    indexRandom = Math.floor(Math.random() * max);
   }
   return newArray;
 }
@@ -67,9 +66,8 @@ class Questions extends React.Component {
     }
   }
 
-  selectWrongAnswer(timedOut) {
-    timedOut ? alert('Aaaaaaaahhhh não dá mais não, o seu tempo acabou') :
-      alert('Que pena... você errou!');
+  selectWrongAnswer() {
+    alert('Que pena... você errou!');
     this.setState({ finishedQuestion: true });
   }
 
@@ -91,7 +89,7 @@ class Questions extends React.Component {
         key={answer}
         data-testid={`wrong-answer-${index}`}
         disabled={this.state.finishedQuestion}
-        onClick={() => this.selectWrongAnswer(false)}
+        onClick={() => this.selectWrongAnswer()}
       >{answer}
       </button>
     );
