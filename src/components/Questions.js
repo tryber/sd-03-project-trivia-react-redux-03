@@ -5,6 +5,7 @@ import { scoreReducer } from '../actions';
 import { triviaAPI } from '../services/api';
 import Loading from './Loading';
 import Feedback from '../pages/Feedback';
+import '../App.css';
 
 function arrayRandom(array) {
   let max = 4;
@@ -30,6 +31,8 @@ class Questions extends React.Component {
       questions: [],
       remainingTime: 30,
       finishedQuestion: false,
+      styleCorrectAnswer: {},
+      styleIncorrectAnswer: {},
     };
   }
 
@@ -47,6 +50,10 @@ class Questions extends React.Component {
   }
 
   selectCorrectAnswer(level) {
+    this.setState({
+      styleCorrectAnswer: { border: "3px solid rgb(6, 240, 15)" },
+      styleIncorrectAnswer: { border: "3px solid rgb(255, 0, 0)" },
+    });
     const { remainingTime } = this.state;
     const { addScore } = this.props;
     alert('Certa a resposta');
@@ -67,32 +74,61 @@ class Questions extends React.Component {
   }
 
   selectWrongAnswer() {
+    this.setState({
+      styleCorrectAnswer: { border: "3px solid rgb(6, 240, 15)" },
+      styleIncorrectAnswer: { border: "3px solid rgb(255, 0, 0)" },
+    });
     alert('Que pena... você errou!');
     this.setState({ finishedQuestion: true });
   }
 
   buttonCorrect(answer, diffLevel) {
+    const { styleCorrectAnswer } = this.state;
     return (
       <button
         key={answer}
         data-testid="correct-answer"
-        disabled={this.state.finishedQuestion}
         onClick={() => this.selectCorrectAnswer(diffLevel)}
+        style={styleCorrectAnswer}
       >{answer}
       </button>
     );
   }
 
   buttonIncorrect(answer, index) {
+    const { styleIncorrectAnswer } = this.state;
     return (
       <button
         key={answer}
         data-testid={`wrong-answer-${index}`}
-        disabled={this.state.finishedQuestion}
         onClick={() => this.selectWrongAnswer()}
+        style={styleIncorrectAnswer}
       >{answer}
       </button>
     );
+  }
+
+  booleanButtons(diffLevel, correctAnswer, incorrectAnswers) {
+    const { styleCorrectAnswer, styleIncorrectAnswer } = this.state;
+    return (
+      <ul>
+        <button
+          onClick={() => this.selectCorrectAnswer(diffLevel)}
+          style={styleCorrectAnswer}
+          data-testid="correct-answer"
+        >
+          {correctAnswer}
+        </button>
+        <button
+          onClick={() => this.selectWrongAnswer()}
+          style={styleIncorrectAnswer}
+          data-testid="wrong-answer-0"
+        >
+          {incorrectAnswers}
+        </button>
+      </ul>
+    );
+
   }
 
   generateOptions(type, correctAnswer, incorrectAnswers, diffLevel) {
@@ -106,12 +142,7 @@ class Questions extends React.Component {
           }
           return this.buttonIncorrect(answer, index);
         }));
-    } return (
-      <ul>
-        <button onClick={() => this.selectCorrectAnswer()}>{correctAnswer}</button>
-        <button onClick={() => this.selectWrongAnswer(false)}>{incorrectAnswers}</button>
-      </ul>
-    );
+    } return this.booleanButtons(diffLevel, correctAnswer, incorrectAnswers);
   }
 
   displayQuestion() {
@@ -134,6 +165,16 @@ class Questions extends React.Component {
     );
   }
 
+  onClickNext(event) {
+    const { currentQuestion } = this.state;
+    this.setState({
+      currentQuestion: currentQuestion + 1,
+      finishedQuestion: false,
+      styleCorrectAnswer: {},
+      styleIncorrectAnswer: {},
+    });
+  }
+
   render() {
     const { currentQuestion, remainingTime, isLoading } = this.state;
     if (isLoading) {
@@ -147,10 +188,7 @@ class Questions extends React.Component {
         <button
           className="btn-next"
           data-testid="btn-next"
-          onClick={() => this.setState({
-            currentQuestion: currentQuestion + 1,
-            finishedQuestion: false,
-          })}
+          onClick={() => this.onClickNext()}
         >Próxima</button>
       </div>
     );
