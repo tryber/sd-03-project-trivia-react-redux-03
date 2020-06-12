@@ -2,13 +2,20 @@ import { combineReducers } from 'redux';
 import { ADD_SCORE } from '../actions';
 
 const USER_INFO = 'USER_INFO';
+const DISABLE_BUTTON = 'DISABLE_BUTTON';
 
 const defaultStateUserInfo = {
   name: '',
   email: '',
 };
 
-const initialScore = 0;
+const initialScore = {
+  score: 0
+};
+
+const disabledDefault = {
+  disabled: false,
+}
 
 const userInfo = (state = defaultStateUserInfo, action) => {
   switch (action.type) {
@@ -28,13 +35,25 @@ const scoreReducer = (state = initialScore, action) => {
     case ADD_SCORE:
       return {
         ...state,
-        score: action.points,
+        score: action.points + state.score,
       };
     default:
       return state;
   }
 };
 
-const rootReducer = combineReducers({ userInfo, scoreReducer });
+const disbledReducer = (state = disabledDefault, action) => {
+  switch (action.type) {
+    case DISABLE_BUTTON:
+      return {
+        ...state,
+        disabled: action.value,
+      };
+      default:
+        return state;
+  }
+};
+
+const rootReducer = combineReducers({ userInfo, scoreReducer, disbledReducer });
 
 export default rootReducer;
