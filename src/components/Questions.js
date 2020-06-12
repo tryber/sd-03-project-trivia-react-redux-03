@@ -170,8 +170,15 @@ class Questions extends React.Component {
     );
   }
 
-  decremenTime(time) {
-    this.setState({ remainingTime: time - 1 });
+  time(remainingTime) {
+   if (remainingTime > 0) {
+    setTimeout(() => {
+      this.setState({ remainingTime: remainingTime - 1})
+    }, 1000);
+   }
+    return (
+      <p>Tempo restante: {remainingTime}</p>
+    );
   }
 
   render() {
@@ -183,7 +190,7 @@ class Questions extends React.Component {
     } return (
       <div>
         {this.displayQuestion()}
-        <p>Tempo restante: {remainingTime}</p>
+        {this.time(remainingTime)}
         <button
           className="btn-next"
           data-testid="btn-next"
