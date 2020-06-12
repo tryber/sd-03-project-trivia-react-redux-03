@@ -45,14 +45,10 @@ class Questions extends React.Component {
     });
   }
 
-  decremenTime(time) {
-    this.setState({ remainingTime: time - 1 });
-  }
-
   selectCorrectAnswer(level) {
     this.setState({
-      styleCorrectAnswer: { border: "3px solid rgb(6, 240, 15)" },
-      styleIncorrectAnswer: { border: "3px solid rgb(255, 0, 0)" },
+      styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
+      styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
     });
     const { remainingTime } = this.state;
     const { addScore } = this.props;
@@ -75,8 +71,8 @@ class Questions extends React.Component {
 
   selectWrongAnswer() {
     this.setState({
-      styleCorrectAnswer: { border: "3px solid rgb(6, 240, 15)" },
-      styleIncorrectAnswer: { border: "3px solid rgb(255, 0, 0)" },
+      styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
+      styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
     });
     alert('Que pena... você errou!');
     this.setState({ finishedQuestion: true });
@@ -128,7 +124,6 @@ class Questions extends React.Component {
         </button>
       </ul>
     );
-
   }
 
   generateOptions(type, correctAnswer, incorrectAnswers, diffLevel) {
@@ -165,7 +160,7 @@ class Questions extends React.Component {
     );
   }
 
-  onClickNext(event) {
+  onClickNext() {
     const { currentQuestion } = this.state;
     this.setState({
       currentQuestion: currentQuestion + 1,
@@ -173,6 +168,10 @@ class Questions extends React.Component {
       styleCorrectAnswer: {},
       styleIncorrectAnswer: {},
     });
+  }
+
+  decremenTime(time) {
+    this.setState({ remainingTime: time - 1 });
   }
 
   render() {
