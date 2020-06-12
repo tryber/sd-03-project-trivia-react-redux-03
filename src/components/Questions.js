@@ -1,11 +1,10 @@
 import React from 'react';
-/* import { connect } from 'react-redux';
-import PropTypes from 'prop-types'; */
-import { triviaAPI } from '../services/api';
-import Loading from './Loading';
-import Feedback from '../pages/Feedback'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { scoreReducer } from '../actions';
+import { triviaAPI } from '../services/api';
+import Loading from './Loading';
+import Feedback from '../pages/Feedback';
 
 class Questions extends React.Component {
   constructor(props) {
@@ -30,7 +29,7 @@ class Questions extends React.Component {
   }
 
   decremenTime(time) {
-    this.setState({remainingTime: time - 1});
+    this.setState({ remainingTime: time - 1 });
   }
 
   selectCorrectAnswer(level) {
@@ -40,13 +39,13 @@ class Questions extends React.Component {
     this.setState({ finishedQuestion: true });
     switch (level) {
       case 'easy':
-        addScore(1*remainingTime);
+        addScore(1 * remainingTime);
         break;
       case 'medium':
-        addScore(2*remainingTime);
+        addScore(2 * remainingTime);
         break;
       case 'hard':
-        addScore(3*remainingTime);
+        addScore(3 * remainingTime);
         break;
       default:
         break;
@@ -56,10 +55,10 @@ class Questions extends React.Component {
   selectWrongAnswer(timedOut) {
     timedOut ? alert('Aaaaaaaahhhh não dá mais não, o seu tempo acabou') :
     alert('Que pena... você errou!');
-    this.setState({finishedQuestion: true});
+    this.setState({ finishedQuestion: true });
   }
 
-  generateOptions(type, correct, wrong, diff_level) {
+  generateOptions(type, correct, wrong, diffLevel) {
     if (type === 'multiple') {
       const answers = [
         { id: 0, text: correct, is_correct: true },
@@ -76,11 +75,9 @@ class Questions extends React.Component {
                 key={answer.id}
                 data-testid="correct-answer"
                 disabled={this.state.finishedQuestion}
-                onClick={() => this.selectCorrectAnswer(diff_level)}
-              >
-                {answer.text}
-              </button>
-            )
+                onClick={() => this.selectCorrectAnswer(diffLevel)}
+              >{answer.text}
+              </button>)
           }
           return (
             <button
@@ -88,21 +85,18 @@ class Questions extends React.Component {
               data-testid={`wrong-answer-${index}`}
               disabled={this.state.finishedQuestion}
               onClick={() => this.selectWrongAnswer(false)}
-            >
-              {answer.text}
-            </button>)
-        }
-        )
-      )
-    } else {
-      return (
+            >{answer.text}
+            </button>);
+        }));
+    } return (
         <ul>
           <button onClick={() => this.selectCorrectAnswer()}>{correct}</button>
           <button onClick={() => this.selectWrongAnswer(false)}>{wrong}</button>
         </ul>
       );
     }
-  }
+  
+
 
   displayQuestion() {
     const { currentQuestion, questions } = this.state;
@@ -119,10 +113,7 @@ class Questions extends React.Component {
         <h3 data-testid="question-text">
           Questão {currentQuestion}: {question}
         </h3>
-        { this.generateOptions(
-          type, correct_answer, incorrect_answers, difficulty
-          )
-        }
+        { this.generateOptions(type, correct_answer, incorrect_answers, difficulty) }
       </div>
     );
   }
@@ -144,7 +135,7 @@ class Questions extends React.Component {
               data-testid="btn-next"
               onClick={() => this.setState({
                 currentQuestion: currentQuestion + 1,
-                finishedQuestion: false
+                finishedQuestion: false,
               })}
             >Próxima</button>
           </div>
@@ -152,6 +143,10 @@ class Questions extends React.Component {
     }
   }
 }
+
+Questions.propTypes = {
+  addScore: PropTypes.func.isRequired,
+};
 
 // setTimeout(() => {
 //   this.decremenTime(remainingTime);

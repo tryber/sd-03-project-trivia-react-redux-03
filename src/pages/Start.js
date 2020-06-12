@@ -22,13 +22,13 @@ class Start extends React.Component {
   onClickToPlay() {
     const { name, email } = this.state;
     const { user } = this.props;
-    const playerInfo = { 
-      "player": {
-        "name": name,
-        "assertions": 0,
-        "score": 0,
-        "gravatarEmail": email,
-      }
+    const playerInfo = {
+      player: {
+        name: name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
     };
     user(name, email);
     this.setState({ redirectScreenPlay: true });
