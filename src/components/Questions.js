@@ -6,6 +6,21 @@ import { triviaAPI } from '../services/api';
 import Loading from './Loading';
 import Feedback from '../pages/Feedback';
 
+function arrayRandom(array) {
+  const min = 0;
+  let max = 4;
+  let indexRandom = Math.floor(Math.random() * (max - min) + min);
+  const arrayLength = array.length;
+  let newArray = [];
+  for (let i = 0; i < arrayLength; i += 1) {
+    newArray = [...newArray, array[indexRandom]];
+    array.splice(indexRandom, 1);
+    max -= 1;
+    indexRandom = Math.floor(Math.random() * (max - min) + min);
+  }
+  return newArray;
+}
+
 class Questions extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +37,7 @@ class Questions extends React.Component {
   componentDidMount() {
     triviaAPI().then((questions) => {
       this.setState({
-        currentQuestion: 1,
+        isLoading: false,
         questions,
       });
     });
@@ -54,44 +69,49 @@ class Questions extends React.Component {
 
   selectWrongAnswer(timedOut) {
     timedOut ? alert('Aaaaaaaahhhh não dá mais não, o seu tempo acabou') :
-    alert('Que pena... você errou!');
+      alert('Que pena... você errou!');
     this.setState({ finishedQuestion: true });
   }
 
-  generateOptions(type, correct, wrong, diffLevel) {
+  buttonCorrect(answer, diffLevel) {
+    return (
+      <button
+        key={answer}
+        data-testid="correct-answer"
+        disabled={this.state.finishedQuestion}
+        onClick={() => this.selectCorrectAnswer(diffLevel)}
+      >{answer}
+      </button>
+    );
+  }
+
+  buttonIncorrect(answer, index) {
+    return (
+      <button
+        key={answer}
+        data-testid={`wrong-answer-${index}`}
+        disabled={this.state.finishedQuestion}
+        onClick={() => this.selectWrongAnswer(false)}
+      >{answer}
+      </button>
+    );
+  }
+
+  generateOptions(type, correctAnswer, incorrectAnswers, diffLevel) {
+    const arrayAnswers = [...incorrectAnswers, correctAnswer];
+    const randomAnswers = arrayRandom(arrayAnswers);
     if (type === 'multiple') {
-      const answers = [
-        { id: 0, text: correct, is_correct: true },
-        { id: 1, text: wrong[0], is_correct: false },
-        { id: 2, text: wrong[1], is_correct: false },
-        { id: 3, text: wrong[2], is_correct: false },
-      ];
-      answers.sort((a, b) => 0.5 - Math.random());
       return (
-        answers.map((answer, index) => {
-          if (answer.is_correct) {
-            return (
-              <button
-                key={answer.id}
-                data-testid="correct-answer"
-                disabled={this.state.finishedQuestion}
-                onClick={() => this.selectCorrectAnswer(diffLevel)}
-              >{answer.text}
-              </button>);
+        randomAnswers.map((answer, index) => {
+          if (answer === correctAnswer) {
+            return this.buttonCorrect(answer, diffLevel);
           }
-          return (
-            <button
-              key={answer.id}
-              data-testid={`wrong-answer-${index}`}
-              disabled={this.state.finishedQuestion}
-              onClick={() => this.selectWrongAnswer(false)}
-            >{answer.text}
-            </button>);
+          return this.buttonIncorrect(answer, index);
         }));
     } return (
       <ul>
-        <button onClick={() => this.selectCorrectAnswer()}>{correct}</button>
-        <button onClick={() => this.selectWrongAnswer(false)}>{wrong}</button>
+        <button onClick={() => this.selectCorrectAnswer()}>{correctAnswer}</button>
+        <button onClick={() => this.selectWrongAnswer(false)}>{incorrectAnswers}</button>
       </ul>
     );
   }
@@ -109,36 +129,33 @@ class Questions extends React.Component {
       <div>
         <h3 data-testid="question-category">Categoria: {category}</h3>
         <h3 data-testid="question-text">
-          Questão {currentQuestion}: {question}
+          Questão {currentQuestion + 1}: {question}
         </h3>
-        { this.generateOptions(type, correct_answer, incorrect_answers, difficulty) }
+        {this.generateOptions(type, correct_answer, incorrect_answers, difficulty)}
       </div>
     );
   }
 
   render() {
-    const { currentQuestion, remainingTime } = this.state;
-    switch (currentQuestion) {
-      case 0:
-        return <Loading />;
-      case 5:
-        return (<div>{<Feedback />}</div>);
-      default:
-        return (
-          <div>
-            {this.displayQuestion()}
-            <p>Tempo restante: {remainingTime}</p>
-            <button
-              className="btn-next"
-              data-testid="btn-next"
-              onClick={() => this.setState({
-                currentQuestion: currentQuestion + 1,
-                finishedQuestion: false,
-              })}
-            >Próxima</button>
-          </div>
-        );
-    }
+    const { currentQuestion, remainingTime, isLoading } = this.state;
+    if (isLoading) {
+      return <Loading />;
+    } else if (currentQuestion === 5) {
+      return (<div>{<Feedback />}</div>);
+    } return (
+      <div>
+        {this.displayQuestion()}
+        <p>Tempo restante: {remainingTime}</p>
+        <button
+          className="btn-next"
+          data-testid="btn-next"
+          onClick={() => this.setState({
+            currentQuestion: currentQuestion + 1,
+            finishedQuestion: false,
+          })}
+        >Próxima</button>
+      </div>
+    );
   }
 }
 

@@ -32,6 +32,10 @@ const mapStateToProps = (state) => ({
   score: state.scoreReducer.score,
 });
 
+Header.defaultProps = {
+  score: 0,
+};
+
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
