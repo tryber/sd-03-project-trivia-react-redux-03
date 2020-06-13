@@ -34,7 +34,7 @@ class Start extends React.Component {
     this.setState({ redirectScreenPlay: true });
     tokenPlayer().then((item) => localStorage.setItem('token', item));
     startGame(0);
-    localStorage.setItem('state', JSON.stringify(playerInfo));
+    localStorage.setItem('player', JSON.stringify(playerInfo));
   }
 
   onChangeEmailValue(event) {

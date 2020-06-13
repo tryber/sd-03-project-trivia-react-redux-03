@@ -1,8 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_SCORE, NEW_GAME } from '../actions';
-
-const USER_INFO = 'USER_INFO';
-const DISABLE_BUTTON = 'DISABLE_BUTTON';
+import { ADD_SCORE, NEW_GAME, USER_INFO, DISABLE_BUTTON } from '../actions';
 
 const defaultStateUserInfo = {
   name: '',

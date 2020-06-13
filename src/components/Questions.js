@@ -56,7 +56,6 @@ class Questions extends React.Component {
 
   onClickNext() {
     const { currentQuestion } = this.state;
-    // const { disabled } = this.props;
     this.setState({
       currentQuestion: currentQuestion + 1,
       disableButtons: false,
@@ -66,48 +65,53 @@ class Questions extends React.Component {
       goToNextBtnClass: 'hideButton',
       enableTimer: true,
     });
-    // disabled(false);
   }
 
   selectCorrectAnswer(level) {
     this.setState({
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
       styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
+      goToNextBtnClass: 'displayButton',
+      disableButtons: true,
+      enableTimer: false,
     });
     const { remainingTime } = this.state;
     const { addScore } = this.props;
-    alert('Certa a resposta');
-    this.setState({ goToNextBtnClass: 'displayButton' });
-    this.setState({
-      disableButtons: true,
-      goToNextBtnClass: 'displayButton',
-      enableTimer: false,
-    });
-    switch (level) {
-      case 'easy':
-        addScore(1 * remainingTime);
-        break;
-      case 'medium':
-        addScore(2 * remainingTime);
-        break;
-      case 'hard':
-        addScore(3 * remainingTime);
-        break;
-      default:
-        break;
+    const playerLocal = JSON.parse(localStorage.getItem('player')).player;
+    console.log(playerLocal)
+    let player;
+    if (level === 'easy') {
+      addScore(1 * remainingTime);
+      player = {
+        ...playerLocal,
+        assertions: playerLocal.assertions + 1,
+        score: playerLocal.score + (1 * remainingTime)
+      }
+      localStorage.setItem('player', JSON.stringify(player))
+    } else if (level === 'medium') {
+      addScore(2 * remainingTime);
+      player = {
+        ...playerLocal,
+        assertions: playerLocal.assertions + 1,
+        score: playerLocal.score + (2 * remainingTime)
+      }
+      localStorage.setItem('player', JSON.stringify(player))
+    } else if (level === 'hard') {
+      addScore(3 * remainingTime);
+      player = {
+        ...playerLocal,
+        assertions: playerLocal.assertions + 1,
+        score: playerLocal.score + (3 * remainingTime)
+      }
+      localStorage.setItem('player', JSON.stringify(player))
     }
   }
 
-  selectWrongAnswer(timedOut) {
+  selectWrongAnswer() {
     this.setState({
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
       styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
     });
-    if (timedOut) {
-      alert('O seu tempo acabou!');
-    } else {
-      alert('Que pena... você errou!');
-    }
     this.setState({
       goToNextBtnClass: 'displayButton',
       disableButtons: true,
@@ -115,9 +119,8 @@ class Questions extends React.Component {
     });
   }
 
-  buttonCorrect(answer, diffLevel) {
+  buttonCorrect(answer, diffLevel, index) {
     const { styleCorrectAnswer, disableButtons } = this.state;
-    // const { disabledTruFalse } = this.props;
     return (
       <p>
         <button
@@ -125,7 +128,6 @@ class Questions extends React.Component {
           data-testid="correct-answer"
           onClick={() => this.selectCorrectAnswer(diffLevel)}
           style={styleCorrectAnswer}
-          // disabled={disabledTruFalse}
           disabled={disableButtons}
         >{answer}
         </button>
@@ -135,7 +137,6 @@ class Questions extends React.Component {
 
   buttonIncorrect(answer, index) {
     const { styleIncorrectAnswer, disableButtons } = this.state;
-    // const { disabledTruFalse } = this.props;
     return (
       <p>
         <button
@@ -143,7 +144,6 @@ class Questions extends React.Component {
           data-testid={`wrong-answer-${index}`}
           onClick={() => this.selectWrongAnswer(false)}
           style={styleIncorrectAnswer}
-          // disabled={disabledTruFalse}
           disabled={disableButtons}
         >{answer}
         </button>
@@ -153,7 +153,6 @@ class Questions extends React.Component {
 
   booleanButtons(diffLevel, correctAnswer, incorrectAnswers) {
     const { styleCorrectAnswer, styleIncorrectAnswer, disableButtons } = this.state;
-    // const { disabledTruFalse } = this.props;
     return (
       <ul>
         <p>
@@ -161,7 +160,6 @@ class Questions extends React.Component {
             onClick={() => this.selectCorrectAnswer(diffLevel)}
             style={styleCorrectAnswer}
             data-testid="correct-answer"
-            // disabled={disabledTruFalse}
             disabled={disableButtons}
           >
             {correctAnswer}
@@ -172,7 +170,6 @@ class Questions extends React.Component {
             onClick={() => this.selectWrongAnswer()}
             style={styleIncorrectAnswer}
             data-testid="wrong-answer-0"
-            // disabled={disabledTruFalse}
             disabled={disableButtons}
           >
             {incorrectAnswers}
@@ -188,7 +185,7 @@ class Questions extends React.Component {
       return (
         arrayAnswers[currentQuestion].map((answer, index) => {
           if (answer === correctAnswer) {
-            return this.buttonCorrect(answer, diffLevel);
+            return this.buttonCorrect(answer, diffLevel, index);
           }
           return this.buttonIncorrect(answer, index);
         }));
@@ -225,7 +222,6 @@ class Questions extends React.Component {
     }
     if (remainingTime === 0 && enableTimer) {
       disableButtons(true);
-      this.selectWrongAnswer(true);
     }
     return (
       <p>Tempo restante: {remainingTime}</p>
@@ -255,7 +251,6 @@ class Questions extends React.Component {
 Questions.propTypes = {
   addScore: PropTypes.func.isRequired,
   disableButtons: PropTypes.func.isRequired,
-  // disabledTruFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
