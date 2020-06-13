@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import MD5 from 'crypto-js/md5';
 
 function cryptEmailMD5(data) {
@@ -13,14 +14,19 @@ class Header extends React.Component {
     const emailHash = cryptEmailMD5(email);
     return (
       <div className="header">
-        <img
-          alt="Imagem de avatar do jogador"
-          data-testid="header-profile-picture"
-          src={`https://www.gravatar.com/avatar/${emailHash}`}
-          width="50px"
-        />
-        <p data-testid="header-player-name">Jogador: {name}</p>
+        <div className="playerInfo">
+          <img
+            alt="Imagem de avatar do jogador"
+            data-testid="header-profile-picture"
+            src={`https://www.gravatar.com/avatar/${emailHash}`}
+            height="30px"
+          />
+          <p data-testid="header-player-name">Jogador: {name}</p>
+        </div>
         <p data-testid="header-score">Pontos: {score}</p>
+        <Link to="/">
+          <button data-testid="btn-go-home">Início</button>
+        </Link>
       </div>
     );
   }
@@ -29,7 +35,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   name: state.userInfo.name,
   email: state.userInfo.email,
-  score: state.scoreReducer.score,
+  score: state.manageScore.score,
 });
 
 Header.propTypes = {

@@ -9,7 +9,7 @@ export const userInfo = (name, email) => ({
   email,
 });
 
-export const scoreReducer = (points) => ({
+export const addScore = (points) => ({
   type: ADD_SCORE,
   points,
 });

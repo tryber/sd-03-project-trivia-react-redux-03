@@ -30,7 +30,7 @@ const userInfo = (state = defaultStateUserInfo, action) => {
   }
 };
 
-const scoreReducer = (state = initialScore, action) => {
+const manageScore = (state = initialScore, action) => {
   switch (action.type) {
     case ADD_SCORE:
       return {
@@ -39,7 +39,7 @@ const scoreReducer = (state = initialScore, action) => {
       };
     case NEW_GAME:
       return {
-        initialScore,
+        score: 0,
       };
     default:
       return state;
@@ -58,6 +58,6 @@ const disbledReducer = (state = disabledDefault, action) => {
   }
 };
 
-const rootReducer = combineReducers({ userInfo, scoreReducer, disbledReducer });
+const rootReducer = combineReducers({ userInfo, manageScore, disbledReducer });
 
 export default rootReducer;

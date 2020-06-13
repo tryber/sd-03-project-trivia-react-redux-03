@@ -108,7 +108,7 @@ class Start extends React.Component {
     }
 
     return (
-      <div>
+      <div className="startPage">
         {this.labelEmail()}
         {this.labelName()}
         {this.buttonPlay(buttonDisbled)}

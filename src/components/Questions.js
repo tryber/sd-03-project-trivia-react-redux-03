@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { scoreReducer, disabledReducer } from '../actions';
+import { addScore, disabledReducer } from '../actions';
 import { triviaAPI } from '../services/api';
 import Loading from './Loading';
 import Feedback from '../pages/Feedback';
@@ -62,7 +62,7 @@ class Questions extends React.Component {
       disableButtons: false,
       styleCorrectAnswer: {},
       styleIncorrectAnswer: {},
-      remainingTime: 10,
+      remainingTime: 30,
       goToNextBtnClass: 'hideButton',
       enableTimer: true,
     });
@@ -119,15 +119,17 @@ class Questions extends React.Component {
     const { styleCorrectAnswer, disableButtons } = this.state;
     // const { disabledTruFalse } = this.props;
     return (
-      <button
-        key={answer}
-        data-testid="correct-answer"
-        onClick={() => this.selectCorrectAnswer(diffLevel)}
-        style={styleCorrectAnswer}
-        // disabled={disabledTruFalse}
-        disabled={disableButtons}
-      >{answer}
-      </button>
+      <p>
+        <button
+          key={answer}
+          data-testid="correct-answer"
+          onClick={() => this.selectCorrectAnswer(diffLevel)}
+          style={styleCorrectAnswer}
+          // disabled={disabledTruFalse}
+          disabled={disableButtons}
+        >{answer}
+        </button>
+      </p>
     );
   }
 
@@ -135,15 +137,17 @@ class Questions extends React.Component {
     const { styleIncorrectAnswer, disableButtons } = this.state;
     // const { disabledTruFalse } = this.props;
     return (
-      <button
-        key={answer}
-        data-testid={`wrong-answer-${index}`}
-        onClick={() => this.selectWrongAnswer(false)}
-        style={styleIncorrectAnswer}
-        // disabled={disabledTruFalse}
-        disabled={disableButtons}
-      >{answer}
-      </button>
+      <p>
+        <button
+          key={answer}
+          data-testid={`wrong-answer-${index}`}
+          onClick={() => this.selectWrongAnswer(false)}
+          style={styleIncorrectAnswer}
+          // disabled={disabledTruFalse}
+          disabled={disableButtons}
+        >{answer}
+        </button>
+      </p>
     );
   }
 
@@ -152,24 +156,28 @@ class Questions extends React.Component {
     // const { disabledTruFalse } = this.props;
     return (
       <ul>
-        <button
-          onClick={() => this.selectCorrectAnswer(diffLevel)}
-          style={styleCorrectAnswer}
-          data-testid="correct-answer"
-          // disabled={disabledTruFalse}
-          disabled={disableButtons}
-        >
-          {correctAnswer}
-        </button>
-        <button
-          onClick={() => this.selectWrongAnswer()}
-          style={styleIncorrectAnswer}
-          data-testid="wrong-answer-0"
-          // disabled={disabledTruFalse}
-          disabled={disableButtons}
-        >
-          {incorrectAnswers}
-        </button>
+        <p>
+          <button
+            onClick={() => this.selectCorrectAnswer(diffLevel)}
+            style={styleCorrectAnswer}
+            data-testid="correct-answer"
+            // disabled={disabledTruFalse}
+            disabled={disableButtons}
+          >
+            {correctAnswer}
+          </button>
+        </p>
+        <p>
+          <button
+            onClick={() => this.selectWrongAnswer()}
+            style={styleIncorrectAnswer}
+            data-testid="wrong-answer-0"
+            // disabled={disabledTruFalse}
+            disabled={disableButtons}
+          >
+            {incorrectAnswers}
+          </button>
+        </p>
       </ul>
     );
   }
@@ -197,7 +205,7 @@ class Questions extends React.Component {
       incorrect_answers,
       question } = questions[currentQuestion];
     return (
-      <div>
+      <div className="question">
         <h3 data-testid="question-category">Categoria: {category}</h3>
         <h3 data-testid="question-text">
           Questão {currentQuestion + 1}: {question}
@@ -231,7 +239,7 @@ class Questions extends React.Component {
     } else if (currentQuestion === 5) {
       return (<div>{<Feedback />}</div>);
     } return (
-      <div>
+      <div className="gameScreen">
         {this.displayQuestion()}
         {this.elapseTime()}
         <button
@@ -251,7 +259,7 @@ Questions.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addScore: (event) => dispatch(scoreReducer(event)),
+  addScore: (event) => dispatch(addScore(event)),
   disableButtons: (value) => dispatch(disabledReducer(value)),
 });
 
