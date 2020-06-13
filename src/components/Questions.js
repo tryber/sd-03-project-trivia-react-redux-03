@@ -103,8 +103,11 @@ class Questions extends React.Component {
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
       styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
     });
-    timedOut ? alert('O seu tempo acabou!') :
-    alert('Que pena... você errou!');
+    if (timedOut) {
+      alert('O seu tempo acabou!');
+    } else {
+      alert('Que pena... você errou!');
+    }
     this.setState({
       goToNextBtnClass: 'displayButton',
       disableButtons: true,
@@ -244,7 +247,7 @@ class Questions extends React.Component {
 Questions.propTypes = {
   addScore: PropTypes.func.isRequired,
   disableButtons: PropTypes.func.isRequired,
-  disabledTruFalse: PropTypes.bool.isRequired,
+  // disabledTruFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
