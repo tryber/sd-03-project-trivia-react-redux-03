@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_SCORE } from '../actions';
+import { ADD_SCORE, NEW_GAME } from '../actions';
 
 const USER_INFO = 'USER_INFO';
 const DISABLE_BUTTON = 'DISABLE_BUTTON';
@@ -36,6 +36,10 @@ const scoreReducer = (state = initialScore, action) => {
       return {
         ...state,
         score: action.points + state.score,
+      };
+    case NEW_GAME:
+      return {
+        score: 0,
       };
     default:
       return state;

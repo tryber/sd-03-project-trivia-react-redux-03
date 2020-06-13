@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { tokenPlayer } from '../services/api';
-import { userInfo } from '../actions';
+import { userInfo, newGame } from '../actions';
 
 class Start extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Start extends React.Component {
 
   onClickToPlay() {
     const { name, email } = this.state;
-    const { user } = this.props;
+    const { user, startGame } = this.props;
     const playerInfo = {
       player: {
         name,
@@ -33,6 +33,7 @@ class Start extends React.Component {
     user(name, email);
     this.setState({ redirectScreenPlay: true });
     tokenPlayer().then((item) => localStorage.setItem('token', item));
+    // startGame();
     localStorage.setItem('state', JSON.stringify(playerInfo));
   }
 
@@ -123,6 +124,7 @@ class Start extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   user: (name, email) => dispatch(userInfo(name, email)),
+  // startGame: dispatch(newGame()),
 });
 
 const mapStateToProps = (state) => ({
