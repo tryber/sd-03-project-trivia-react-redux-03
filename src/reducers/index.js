@@ -10,12 +10,12 @@ const defaultStateUserInfo = {
 };
 
 const initialScore = {
-  score: 0
+  score: 0,
 };
 
 const disabledDefault = {
   disabled: false,
-}
+};
 
 const userInfo = (state = defaultStateUserInfo, action) => {
   switch (action.type) {
@@ -39,7 +39,7 @@ const scoreReducer = (state = initialScore, action) => {
       };
     case NEW_GAME:
       return {
-        score: 0,
+        initialScore,
       };
     default:
       return state;
@@ -53,8 +53,8 @@ const disbledReducer = (state = disabledDefault, action) => {
         ...state,
         disabled: action.value,
       };
-      default:
-        return state;
+    default:
+      return state;
   }
 };
 

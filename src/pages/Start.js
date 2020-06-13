@@ -33,7 +33,7 @@ class Start extends React.Component {
     user(name, email);
     this.setState({ redirectScreenPlay: true });
     tokenPlayer().then((item) => localStorage.setItem('token', item));
-    // startGame();
+    startGame(0);
     localStorage.setItem('state', JSON.stringify(playerInfo));
   }
 
@@ -124,7 +124,7 @@ class Start extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   user: (name, email) => dispatch(userInfo(name, email)),
-  // startGame: dispatch(newGame()),
+  startGame: (e) => dispatch(newGame(e)),
 });
 
 const mapStateToProps = (state) => ({
@@ -133,6 +133,7 @@ const mapStateToProps = (state) => ({
 
 Start.propTypes = {
   user: PropTypes.func.isRequired,
+  startGame: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Start);

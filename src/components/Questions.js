@@ -56,7 +56,7 @@ class Questions extends React.Component {
 
   onClickNext() {
     const { currentQuestion } = this.state;
-    const { disabled } = this.props;
+    // const { disabled } = this.props;
     this.setState({
       currentQuestion: currentQuestion + 1,
       disableButtons: false,
@@ -77,7 +77,7 @@ class Questions extends React.Component {
     const { remainingTime } = this.state;
     const { addScore } = this.props;
     alert('Certa a resposta');
-    this.setState({goToNextBtnClass: 'displayButton'});
+    this.setState({ goToNextBtnClass: 'displayButton' });
     this.setState({
       disableButtons: true,
       goToNextBtnClass: 'displayButton',
@@ -103,8 +103,7 @@ class Questions extends React.Component {
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
       styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
     });
-    timedOut ?
-    alert('O seu tempo acabou!') :
+    timedOut ? alert('O seu tempo acabou!') :
     alert('Que pena... você errou!');
     this.setState({
       goToNextBtnClass: 'displayButton',
@@ -115,7 +114,7 @@ class Questions extends React.Component {
 
   buttonCorrect(answer, diffLevel) {
     const { styleCorrectAnswer, disableButtons } = this.state;
-    const { disabledTruFalse } = this.props;
+    // const { disabledTruFalse } = this.props;
     return (
       <button
         key={answer}
@@ -131,7 +130,7 @@ class Questions extends React.Component {
 
   buttonIncorrect(answer, index) {
     const { styleIncorrectAnswer, disableButtons } = this.state;
-    const { disabledTruFalse } = this.props;
+    // const { disabledTruFalse } = this.props;
     return (
       <button
         key={answer}
@@ -147,7 +146,7 @@ class Questions extends React.Component {
 
   booleanButtons(diffLevel, correctAnswer, incorrectAnswers) {
     const { styleCorrectAnswer, styleIncorrectAnswer, disableButtons } = this.state;
-    const { disabledTruFalse } = this.props;
+    // const { disabledTruFalse } = this.props;
     return (
       <ul>
         <button
@@ -244,6 +243,8 @@ class Questions extends React.Component {
 
 Questions.propTypes = {
   addScore: PropTypes.func.isRequired,
+  disableButtons: PropTypes.func.isRequired,
+  disabledTruFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
