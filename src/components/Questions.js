@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addScore, disabledReducer } from '../actions';
+import { addToScore, disabledReducer } from '../actions';
 import { triviaAPI } from '../services/api';
 import Loading from './Loading';
 import Feedback from '../pages/Feedback';
@@ -259,7 +259,7 @@ Questions.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addScore: (event) => dispatch(addScore(event)),
+  addScore: (event) => dispatch(addToScore(event)),
   disableButtons: (value) => dispatch(disabledReducer(value)),
 });
 
