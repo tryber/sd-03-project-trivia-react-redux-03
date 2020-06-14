@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Start from './pages/Start';
 import Settings from './pages/Settings';
 import Feedback from './pages/Feedback';
+import Ranking from './pages/Ranking';
 import './App.css';
 
 class App extends React.Component {
