@@ -89,8 +89,7 @@ class Questions extends React.Component {
         score: playerLocal.score + (1 * remainingTime)
       }
       localStorage.setItem('player', JSON.stringify(player))
-      
-    } else if (level === 'medium') {
+      } else if (level === 'medium') {
       addScore(2 * remainingTime);
       player = {
         ...playerLocal,
@@ -253,13 +252,13 @@ class Questions extends React.Component {
 }
 
 Questions.propTypes = {
-  addScore: PropTypes.func.isRequired,
+  /* addScore: PropTypes.func.isRequired, */
   disableButtons: PropTypes.func.isRequired,
   disabledTrueFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addScore: (event) => dispatch(addToScore(event)),
+  /*  addScore: (event) => dispatch(addToScore(event)), */
   disableButtons: (value) => dispatch(disabledReducer(value)),
 });
 
