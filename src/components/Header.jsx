@@ -21,13 +21,13 @@ function Header({ userName, score, userEmail }) {
           <p data-testid="header-player-name">{userName}</p>
         </span>
       </div>
-      <Link to="/">
-        <button data-testid="btn-play-again">Início</button>
-      </Link>
       <div>
         <h3 className="player-score" data-testid="header-score">
           {score}
         </h3>
+        <Link to="/">
+          <button data-testid="btn-play-again">Início</button>
+        </Link>
       </div>
     </header>
   );
