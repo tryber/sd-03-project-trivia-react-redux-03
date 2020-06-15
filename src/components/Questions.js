@@ -56,9 +56,10 @@ class Questions extends React.Component {
 
   onClickNext() {
     const { currentQuestion } = this.state;
+    const { disableButtons } = this.props;
+    disableButtons(false)
     this.setState({
       currentQuestion: currentQuestion + 1,
-      disableButtons: false,
       styleCorrectAnswer: {},
       styleIncorrectAnswer: {},
       remainingTime: 30,
@@ -68,17 +69,16 @@ class Questions extends React.Component {
   }
 
   selectCorrectAnswer(level) {
+    const { disableButtons } = this.props;
+    disableButtons(true);
     this.setState({
       styleCorrectAnswer: { border: '3px solid rgb(6, 240, 15)' },
       styleIncorrectAnswer: { border: '3px solid rgb(255, 0, 0)' },
-      goToNextBtnClass: 'displayButton',
-      disableButtons: true,
       enableTimer: false,
     });
     const { remainingTime } = this.state;
     const { addScore } = this.props;
-    const playerLocal = JSON.parse(localStorage.getItem('player')).player;
-    console.log(playerLocal)
+    const playerLocal = JSON.parse(localStorage.getItem('player'));
     let player;
     if (level === 'easy') {
       addScore(1 * remainingTime);
@@ -119,8 +119,9 @@ class Questions extends React.Component {
     });
   }
 
-  buttonCorrect(answer, diffLevel, index) {
-    const { styleCorrectAnswer, disableButtons } = this.state;
+  buttonCorrect(answer, diffLevel) {
+    const { styleCorrectAnswer } = this.state;
+    const { disabledTrueFalse } = this.props;
     return (
       <p>
         <button
@@ -128,7 +129,7 @@ class Questions extends React.Component {
           data-testid="correct-answer"
           onClick={() => this.selectCorrectAnswer(diffLevel)}
           style={styleCorrectAnswer}
-          disabled={disableButtons}
+          disabled={disabledTrueFalse}
         >{answer}
         </button>
       </p>
@@ -136,7 +137,8 @@ class Questions extends React.Component {
   }
 
   buttonIncorrect(answer, index) {
-    const { styleIncorrectAnswer, disableButtons } = this.state;
+    const { styleIncorrectAnswer } = this.state;
+    const { disabledTrueFalse } = this.props;
     return (
       <p>
         <button
@@ -144,7 +146,7 @@ class Questions extends React.Component {
           data-testid={`wrong-answer-${index}`}
           onClick={() => this.selectWrongAnswer(false)}
           style={styleIncorrectAnswer}
-          disabled={disableButtons}
+          disabled={disabledTrueFalse}
         >{answer}
         </button>
       </p>
@@ -152,7 +154,8 @@ class Questions extends React.Component {
   }
 
   booleanButtons(diffLevel, correctAnswer, incorrectAnswers) {
-    const { styleCorrectAnswer, styleIncorrectAnswer, disableButtons } = this.state;
+    const { styleCorrectAnswer, styleIncorrectAnswer } = this.state;
+    const { disabledTrueFalse } = this.props;
     return (
       <ul>
         <p>
@@ -160,7 +163,7 @@ class Questions extends React.Component {
             onClick={() => this.selectCorrectAnswer(diffLevel)}
             style={styleCorrectAnswer}
             data-testid="correct-answer"
-            disabled={disableButtons}
+            disabled={disabledTrueFalse}
           >
             {correctAnswer}
           </button>
@@ -170,7 +173,7 @@ class Questions extends React.Component {
             onClick={() => this.selectWrongAnswer()}
             style={styleIncorrectAnswer}
             data-testid="wrong-answer-0"
-            disabled={disableButtons}
+            disabled={disabledTrueFalse}
           >
             {incorrectAnswers}
           </button>
@@ -229,7 +232,7 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { currentQuestion, isLoading, goToNextBtnClass } = this.state;
+    const { currentQuestion, isLoading } = this.state;
     if (isLoading) {
       return <Loading />;
     } else if (currentQuestion === 5) {
@@ -239,7 +242,6 @@ class Questions extends React.Component {
         {this.displayQuestion()}
         {this.elapseTime()}
         <button
-          className={goToNextBtnClass}
           data-testid="btn-next"
           onClick={() => this.onClickNext()}
         >Próxima</button>
@@ -259,7 +261,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  disabledTruFalse: state.disbledReducer.disabled,
+  disabledTrueFalse: state.disbledReducer.disabled,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

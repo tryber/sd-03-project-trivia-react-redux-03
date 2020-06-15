@@ -14,11 +14,6 @@ const feedackMessage = (assertions) => {
 };
 
 class Feedback extends React.Component {
-  constructor() {
-    super();
-   
-  }
-
   render() {
     const { assertions, score } = JSON.parse(localStorage.getItem('player')).player;
 
