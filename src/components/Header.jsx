@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import hashedMail from '../services/encrypt_mail';
 import '../styles/Header.css';
 
@@ -25,9 +24,6 @@ function Header({ userName, score, userEmail }) {
         <h3 className="player-score" data-testid="header-score">
           {score}
         </h3>
-        <Link to="/">
-          <button data-testid="btn-play-again">Início</button>
-        </Link>
       </div>
     </header>
   );
