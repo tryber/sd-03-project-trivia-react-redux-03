@@ -57,7 +57,7 @@ class Questions extends React.Component {
   onClickNext() {
     const { currentQuestion } = this.state;
     const { disableButtons } = this.props;
-    disableButtons(false)
+    disableButtons(false);
     this.setState({
       currentQuestion: currentQuestion + 1,
       styleCorrectAnswer: {},
@@ -68,7 +68,7 @@ class Questions extends React.Component {
     });
   }
 
-  selectCorrectAnswer(level) {
+  /* selectCorrectAnswer(level) {
     const { disableButtons } = this.props;
     disableButtons(true);
     this.setState({
@@ -79,6 +79,7 @@ class Questions extends React.Component {
     const { remainingTime } = this.state;
     const { addScore } = this.props;
     const playerLocal = JSON.parse(localStorage.getItem('player'));
+    console.log(playerLocal);
     let player;
     if (level === 'easy') {
       addScore(1 * remainingTime);
@@ -88,6 +89,7 @@ class Questions extends React.Component {
         score: playerLocal.score + (1 * remainingTime)
       }
       localStorage.setItem('player', JSON.stringify(player))
+      
     } else if (level === 'medium') {
       addScore(2 * remainingTime);
       player = {
@@ -105,7 +107,7 @@ class Questions extends React.Component {
       }
       localStorage.setItem('player', JSON.stringify(player))
     }
-  }
+  } */
 
   selectWrongAnswer() {
     this.setState({
@@ -253,6 +255,7 @@ class Questions extends React.Component {
 Questions.propTypes = {
   addScore: PropTypes.func.isRequired,
   disableButtons: PropTypes.func.isRequired,
+  disabledTrueFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
