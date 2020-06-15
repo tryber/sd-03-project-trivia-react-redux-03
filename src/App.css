@@ -1,10 +1,49 @@
 .App {
+  background-image: url('./pages/trivia-background.jpg');
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.startPage {
+  background-color: bisque;
+  display: inline-block;
+  padding: 100px;
+}
+
+.startPage label, input {
+  margin: 5px 20px;
+}
+
+.header {
+  align-items: center;
+  background-color: cornflowerblue;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.header img {
+  border-radius: 12px;
+}
+
+.playerInfo {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 10%;
+}
+
+.gameScreen {
+  background-color: coral;
+  display: inline-block;
+  opacity: 90%;
+}
+
+.question {
+  padding: 100px;
+}
+
+.question button {
+  width: 150px;
 }
 
 .red-border {
@@ -13,6 +52,14 @@
 
 .green-border {
   border: 1px solid green;
+}
+
+.hideButton {
+  display: none;
+}
+
+.displayButton {
+  border: 1px solid blue;
 }
 
 @media (prefers-reduced-motion: no-preference) {

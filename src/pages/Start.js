@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import tokenPlayer from '../services/api';
-
+import PropTypes from 'prop-types';
+import { tokenPlayer } from '../services/api';
+import { userInfo, newGame } from '../actions';
 
 class Start extends React.Component {
   constructor(props) {
@@ -18,9 +20,21 @@ class Start extends React.Component {
   }
 
   onClickToPlay() {
+    const { name, email } = this.state;
+    const { user, startGame } = this.props;
+    const playerInfo = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    user(name, email);
     this.setState({ redirectScreenPlay: true });
-    tokenPlayer()
-      .then((item) => localStorage.setItem('token', item));
+    tokenPlayer().then((item) => localStorage.setItem('token', item));
+    startGame(0);
+    localStorage.setItem('player', JSON.stringify(playerInfo));
   }
 
   onChangeEmailValue(event) {
@@ -79,6 +93,7 @@ class Start extends React.Component {
         data-testid="btn-play"
         disabled={buttonDisbled}
         onClick={this.onClickToPlay}
+        type="submit"
       >
         Jogar
       </button>
@@ -93,16 +108,32 @@ class Start extends React.Component {
     }
 
     return (
-      <div>
+      <div className="startPage">
         {this.labelEmail()}
         {this.labelName()}
         {this.buttonPlay(buttonDisbled)}
         <div>
-          <Link data-testid="btn-settings" to="/settings">Configurações</Link>
+          <Link data-testid="btn-settings" to="/settings">
+            Configurações
+          </Link>
         </div>
       </div>
     );
   }
 }
 
-export default Start;
+const mapDispatchToProps = (dispatch) => ({
+  user: (name, email) => dispatch(userInfo(name, email)),
+  startGame: (e) => dispatch(newGame(e)),
+});
+
+const mapStateToProps = (state) => ({
+  name: state.userInfo.name,
+});
+
+Start.propTypes = {
+  user: PropTypes.func.isRequired,
+  startGame: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Start);
