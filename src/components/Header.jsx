@@ -17,11 +17,13 @@ function Header({ userName, score, userEmail }) {
         />
         <span className="player-name" data-testid="header-player-name">
           Jogador:
-          {userName}
+          <p data-testid="header-player-name">{userName}</p>
         </span>
       </div>
       <div>
-        <h3 className="player-score" data-testid="header-score">{`Placar:${score}`}</h3>
+        <h3 className="player-score" data-testid="header-score">
+          {score}
+        </h3>
       </div>
     </header>
   );
