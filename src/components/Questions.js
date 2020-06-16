@@ -255,6 +255,7 @@ Questions.propTypes = {
   /* addScore: PropTypes.func.isRequired, */
   disableButtons: PropTypes.func.isRequired,
   disabledTrueFalse: PropTypes.bool.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

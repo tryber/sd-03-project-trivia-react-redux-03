@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { generatedURL } from '../actions';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { generatedURL } from '../actions';
 
 
 class Settings extends React.Component {
@@ -9,23 +10,20 @@ class Settings extends React.Component {
     super();
     this.state = {
       category: 'any',
-      trivia_difficulty: 'any',
-      trivia_type: 'any',
+      triviaDifficulty: 'any',
+      triviaType: 'any',
     };
   }
 
   generateURL() {
-    const { category, trivia_difficulty, trivia_type } = this.state;
-    const URL = `https://opentdb.com/api.php?amount=5${category !== 'any' ? `&category=${category}` : ''}${trivia_difficulty !== 'any' ? `&difficulty=${trivia_difficulty}` : ''}${trivia_type !== 'any' ? `&type=${trivia_type}` : ''}`;
+    const { category, triviaDifficulty, triviaType } = this.state;
+    const URL = `https://opentdb.com/api.php?amount=5${category !== 'any' ? `&category=${category}` : ''}${triviaDifficulty !== 'any' ? `&difficulty=${triviaDifficulty}` : ''}${triviaType !== 'any' ? `&type=${triviaType}` : ''}`;
     this.props.dispatch2Fetch(URL);
   }
 
   renderCategoriesList() {
     return (
-      <select
-        name="category"
-        value={this.state.category}
-        onChange={(e) => this.setState({ category: e.target.value })}>
+      <select name="category" value={this.state.category} onChange={(e) => this.setState({ category: e.target.value })}>
         <option value="any">Any Category</option>
         <option value="9">General Knowledge</option>
         <option value="10">Entertainment: Books</option>
@@ -35,7 +33,7 @@ class Settings extends React.Component {
         <option value="14">Entertainment: Television</option>
         <option value="15">Entertainment: Video Games</option>
         <option value="16">Entertainment: Board Games</option>
-        <option value="17">Science 'n' Nature</option>
+        <option value="17">Science &amp; Nature</option>
         <option value="18">Science: Computers</option>
         <option value="19">Science: Mathematics</option>
         <option value="20">Mythology</option>
@@ -55,32 +53,40 @@ class Settings extends React.Component {
     );
   }
 
+  renderDifficultiesList() {
+    return (
+      <select
+      name="triviaDifficulty"
+      value={this.state.triviaDifficulty}
+      onChange={(e) => this.setState({ triviaDifficulty: e.target.value })}
+    >
+      <option value="any">Any Difficulty</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    );
+  }
+
   render() {
     return (
       <fieldset className="settings">
         <h1 data-testid="settings-title">Configurações</h1>
         <label htmlFor="trivia_category">Selecione a categoria: </label>
         {this.renderCategoriesList()}
-        <label htmlFor="trivia_difficulty">Select Difficulty: </label>
+        <label htmlFor="triviaDifficulty">Select Difficulty: </label>
+        {this.renderDifficultiesList()}
+        <label htmlFor="triviaType">Select Type: </label>
         <select
-          name="trivia_difficulty"
-          value={this.state.trivia_difficulty}
-          onChange={(e) => this.setState({ trivia_difficulty: e.target.value })}>
-          <option value="any">Any Difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-		    </select>
-        <label htmlFor="trivia_type">Select Type: </label>
-        <select
-          name="trivia_type"
-          value={this.state.trivia_type}
-          onChange={(e) => this.setState({ trivia_type: e.target.value })}>
+          name="triviaType"
+          value={this.state.triviaType}
+          onChange={(e) => this.setState({ triviaType: e.target.value })}
+        >
           <option value="any">Any Type</option>
           <option value="multiple">Multiple Choice</option>
           <option value="boolean">True / False</option>
         </select>
-        <Link to='/'>
+        <Link to="/">
           <button onClick={() => this.generateURL()}>Salvar.</button>
         </Link>
       </fieldset>
@@ -88,8 +94,12 @@ class Settings extends React.Component {
   }
 }
 
+Settings.propTypes = {
+  dispatch2Fetch: PropTypes.func.isRequired,
+}
+
 const mapDispatchToProps = (dispatch) => ({
   dispatch2Fetch: (url) => dispatch(generatedURL(url)),
 });
 
-export default connect (null, mapDispatchToProps)(Settings);
+export default connect(null, mapDispatchToProps)(Settings);
