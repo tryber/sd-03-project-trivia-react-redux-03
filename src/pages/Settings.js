@@ -23,7 +23,11 @@ class Settings extends React.Component {
 
   renderCategoriesList() {
     return (
-      <select name="category" value={this.state.category} onChange={(e) => this.setState({ category: e.target.value })}>
+      <select
+        name="category"
+        value={this.state.category}
+        onChange={(e) => this.setState({ category: e.target.value })}
+      >
         <option value="any">Any Category</option>
         <option value="9">General Knowledge</option>
         <option value="10">Entertainment: Books</option>
@@ -45,10 +49,7 @@ class Settings extends React.Component {
         <option value="26">Celebrities</option>
         <option value="27">Animals</option>
         <option value="28">Vehicles</option>
-        <option value="29">Entertainment: Comics</option>
         <option value="30">Science: Gadgets</option>
-        <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
-        <option value="32">Entertainment: Cartoon &amp; Animations</option>
       </select>
     );
   }
@@ -56,15 +57,15 @@ class Settings extends React.Component {
   renderDifficultiesList() {
     return (
       <select
-      name="triviaDifficulty"
-      value={this.state.triviaDifficulty}
-      onChange={(e) => this.setState({ triviaDifficulty: e.target.value })}
-    >
-      <option value="any">Any Difficulty</option>
-      <option value="easy">Easy</option>
-      <option value="medium">Medium</option>
-      <option value="hard">Hard</option>
-    </select>
+        name="triviaDifficulty"
+        value={this.state.triviaDifficulty}
+        onChange={(e) => this.setState({ triviaDifficulty: e.target.value })}
+      >
+        <option value="any">Any Difficulty</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
     );
   }
 
@@ -96,7 +97,7 @@ class Settings extends React.Component {
 
 Settings.propTypes = {
   dispatch2Fetch: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch2Fetch: (url) => dispatch(generatedURL(url)),
