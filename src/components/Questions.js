@@ -41,7 +41,7 @@ class Questions extends React.Component {
   componentDidMount() {
     let arrayAnswers = [];
     let arrayItem = [];
-    triviaAPI().then((questions) => {
+    triviaAPI(this.props.url).then((questions) => {
       questions.forEach((item) => {
         arrayItem = [item.correct_answer, ...item.incorrect_answers];
         arrayAnswers = [...arrayAnswers, arrayRandom(arrayItem, arrayItem.length)];
@@ -264,6 +264,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   disabledTrueFalse: state.disbledReducer.disabled,
+  url: state.fetchURL.address,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
