@@ -7,7 +7,7 @@ function dataRanking() {
   return (
     <div>
       {data.map((item, index) => <div key={item.name}>
-        <img src={item.picture} />
+        <img src={item.picture} alt={item.name}/>
         <h4 data-testid={`player-name-${index}`}>Nome: {item.name}</h4>
         <p data-testid={`player-score-${index}`}>Pontuação: {item.score}</p>
       </div>)}
