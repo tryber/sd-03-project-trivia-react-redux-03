@@ -32,15 +32,15 @@ function functionAddScoreLocalStorage(playerLocal, remainingTime, multiplier) {
   localStorage.setItem('player', JSON.stringify(player));
 }
 
-function  functionAddScore(addScore, level, remainingTime, playerLocal) {
+function functionAddScore(addScore, level, remainingTime, playerLocal) {
   if (level === 'easy') {
-    addScore(1 * remainingTime);
+    addScore(10 + (1 * remainingTime));
     functionAddScoreLocalStorage(playerLocal, remainingTime, 1);
   } else if (level === 'medium') {
-    addScore(2 * remainingTime);
+    addScore(10 + (2 * remainingTime));
     functionAddScoreLocalStorage(playerLocal, remainingTime, 2);
   } else if (level === 'hard') {
-    addScore(3 * remainingTime);
+    addScore(10 + (3 * remainingTime));
     functionAddScoreLocalStorage(playerLocal, remainingTime, 3);
   }
 }
