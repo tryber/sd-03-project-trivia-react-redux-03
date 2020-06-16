@@ -1,31 +1,31 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom';
-import Start from './pages/Start';
-import Settings from './pages/Settings';
-import Feedback from './pages/Feedback';
-import Game from './pages/Game';
+  Feedback,
+  Game,
+  Home,
+  NotFound,
+  Ranking,
+  Settings,
+} from './pages';
+import logo from './trivia.png';
 import './App.css';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="App">
-
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Start} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/feedback" component={Feedback} />
-            <Route exact path="/play" component={Game} />
-          </Switch>
-        </Router>
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" style={{ width: 600 }} />
+        <p>SUA VEZ</p>
+      </header>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/game" component={Game} />
+        <Route exact path="/feedback" component={Feedback} />
+        <Route exact path="/ranking" component={Ranking} />
+        <Route exact path="/settings" component={Settings} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  );
 }
-
-export default App;
