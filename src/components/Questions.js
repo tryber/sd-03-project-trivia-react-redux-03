@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { disabledReducer } from '../actions';
+import { addToScore, disabledReducer } from '../actions';
 import { triviaAPI } from '../services/api';
 import Loading from './Loading';
 import Feedback from '../pages/Feedback';
@@ -68,7 +68,31 @@ class Questions extends React.Component {
     });
   }
 
-  /* selectCorrectAnswer(level) {
+  functionAddScoreLocalStorage(playerLocal, remainingTime, multiplier) {
+    const player = {
+      player: {
+        ...playerLocal.player,
+        assertions: playerLocal.player.assertions + 1,
+        score: playerLocal.player.score + (multiplier * remainingTime),
+      }
+    }
+    localStorage.setItem('player', JSON.stringify(player));
+  }
+
+  functionAddScore(addScore, level, remainingTime, playerLocal) {
+    if (level === 'easy') {
+      addScore(1 * remainingTime);
+      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 1);
+    } else if (level === 'medium') {
+      addScore(2 * remainingTime);
+      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 2);
+    } else if (level === 'hard') {
+      addScore(3 * remainingTime);
+      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 3);
+    }
+  }
+
+  selectCorrectAnswer(level) {
     const { disableButtons } = this.props;
     disableButtons(true);
     this.setState({
@@ -79,34 +103,8 @@ class Questions extends React.Component {
     const { remainingTime } = this.state;
     const { addScore } = this.props;
     const playerLocal = JSON.parse(localStorage.getItem('player'));
-    console.log(playerLocal);
-    let player;
-    if (level === 'easy') {
-      addScore(1 * remainingTime);
-      player = {
-        ...playerLocal,
-        assertions: playerLocal.assertions + 1,
-        score: playerLocal.score + (1 * remainingTime)
-      }
-      localStorage.setItem('player', JSON.stringify(player))
-      } else if (level === 'medium') {
-      addScore(2 * remainingTime);
-      player = {
-        ...playerLocal,
-        assertions: playerLocal.assertions + 1,
-        score: playerLocal.score + (2 * remainingTime)
-      }
-      localStorage.setItem('player', JSON.stringify(player))
-    } else if (level === 'hard') {
-      addScore(3 * remainingTime);
-      player = {
-        ...playerLocal,
-        assertions: playerLocal.assertions + 1,
-        score: playerLocal.score + (3 * remainingTime)
-      }
-      localStorage.setItem('player', JSON.stringify(player))
-    }
-  } */
+    this.functionAddScore(addScore, level, remainingTime, playerLocal);
+  }
 
   selectWrongAnswer() {
     this.setState({
@@ -252,13 +250,13 @@ class Questions extends React.Component {
 }
 
 Questions.propTypes = {
-  /* addScore: PropTypes.func.isRequired, */
+  addScore: PropTypes.func.isRequired,
   disableButtons: PropTypes.func.isRequired,
   disabledTrueFalse: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  /*  addScore: (event) => dispatch(addToScore(event)), */
+  addScore: (event) => dispatch(addToScore(event)),
   disableButtons: (value) => dispatch(disabledReducer(value)),
 });
 
