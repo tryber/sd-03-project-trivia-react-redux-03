@@ -21,6 +21,17 @@ function arrayRandom(array, maxRandom) {
   return newArray;
 }
 
+function functionAddScoreLocalStorage(playerLocal, remainingTime, multiplier) {
+  const player = {
+    player: {
+      ...playerLocal.player,
+      assertions: playerLocal.player.assertions + 1,
+      score: playerLocal.player.score + (multiplier * remainingTime),
+    }
+  }
+  localStorage.setItem('player', JSON.stringify(player));
+}
+
 class Questions extends React.Component {
   constructor(props) {
     super(props);
@@ -68,27 +79,16 @@ class Questions extends React.Component {
     });
   }
 
-  functionAddScoreLocalStorage(playerLocal, remainingTime, multiplier) {
-    const player = {
-      player: {
-        ...playerLocal.player,
-        assertions: playerLocal.player.assertions + 1,
-        score: playerLocal.player.score + (multiplier * remainingTime),
-      }
-    }
-    localStorage.setItem('player', JSON.stringify(player));
-  }
-
   functionAddScore(addScore, level, remainingTime, playerLocal) {
     if (level === 'easy') {
       addScore(1 * remainingTime);
-      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 1);
+      functionAddScoreLocalStorage(playerLocal, remainingTime, 1);
     } else if (level === 'medium') {
       addScore(2 * remainingTime);
-      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 2);
+      functionAddScoreLocalStorage(playerLocal, remainingTime, 2);
     } else if (level === 'hard') {
       addScore(3 * remainingTime);
-      this.functionAddScoreLocalStorage(playerLocal, remainingTime, 3);
+      functionAddScoreLocalStorage(playerLocal, remainingTime, 3);
     }
   }
 
