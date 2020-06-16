@@ -1,5 +1,5 @@
 const urlToken = 'https://opentdb.com/api_token.php?command=request';
-const urlTrivia = 'https://opentdb.com/api.php?amount=5';
+// const urlTrivia = 'https://opentdb.com/api.php?amount=5';
 
 export async function tokenPlayer() {
   return fetch(urlToken)
@@ -7,8 +7,8 @@ export async function tokenPlayer() {
     .then((resJson) => resJson.token);
 }
 
-export async function triviaAPI() {
-  return fetch(urlTrivia)
+export async function triviaAPI(url) {
+  return fetch(url)
     .then((response) => response.json())
     .then((respJSON) => respJSON.results);
 }

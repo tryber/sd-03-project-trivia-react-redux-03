@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_SCORE, NEW_GAME, USER_INFO, DISABLE_BUTTON } from '../actions';
+import { ADD_SCORE, NEW_GAME, USER_INFO, DISABLE_BUTTON, FETCH_URL } from '../actions';
 
 const defaultStateUserInfo = {
   name: '',
@@ -8,6 +8,10 @@ const defaultStateUserInfo = {
 
 const initialScore = {
   score: 0,
+};
+
+const defaultURL = {
+  address: 'https://opentdb.com/api.php?amount=5',
 };
 
 const disabledDefault = {
@@ -21,6 +25,17 @@ const userInfo = (state = defaultStateUserInfo, action) => {
         ...state,
         name: action.name,
         email: action.email,
+      };
+    default:
+      return state;
+  }
+};
+
+const fetchURL = (state = defaultURL, action) => {
+  switch (action.type) {
+    case FETCH_URL:
+      return {
+        address: action.url,
       };
     default:
       return state;
@@ -55,6 +70,6 @@ const disbledReducer = (state = disabledDefault, action) => {
   }
 };
 
-const rootReducer = combineReducers({ userInfo, manageScore, disbledReducer });
+const rootReducer = combineReducers({ userInfo, manageScore, fetchURL, disbledReducer });
 
 export default rootReducer;
