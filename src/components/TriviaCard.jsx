@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import shuffleQuestions from '../services/shuffleQuestions';
 import '../styles/TriviaCard.css';
+import Timer from './Timer';
 
 const answers = ({
   correct_answer: correctAnswer,
@@ -19,20 +20,22 @@ const TriviaCard = ({
 }) => {
   const randomTriviaAnswers = shuffleQuestions(answers(data));
   return (
-    <section>
-      <p data-testid="question-category">
+    <section className="trivia-card">
+      <p data-testid="question-category" className="trivia-data">
         Categoria:
         {data.category}
       </p>
-      <p>
+      <p className="trivia-data">
         Tipo:
         {data.type}
       </p>
-      <p>
+      <p className="trivia-data">
         Nível:
         {data.difficulty}
       </p>
-      <p data-testid="question-text">{data.question}</p>
+      <p data-testid="question-text" className="trivia-question">
+        {data.question}
+      </p>
       {randomTriviaAnswers
         .map((answer, index) => (answer === findCorrectAnswer(randomTriviaAnswers, data) ? (
           <button
@@ -41,7 +44,9 @@ const TriviaCard = ({
             key={answer}
             onClick={onCorrect}
             disabled={disabled}
-            className={disabled ? 'correct-answer' : ''}
+            className={
+              disabled ? 'trivia-button correct-answer' : 'trivia-button'
+            }
           >
             {answer}
           </button>
@@ -52,11 +57,14 @@ const TriviaCard = ({
             key={answer}
             onClick={onWrong}
             disabled={disabled}
-            className={disabled ? 'incorrect-answer' : ''}
+            className={
+              disabled ? 'trivia-button incorrect-answer' : 'trivia-button'
+            }
           >
             {answer}
           </button>
         )))}
+      <Timer />
     </section>
   );
 };

@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 const timerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_TIMER:
-      return { timer: state.timer - 1 };
+      return { timer: action.timer };
     case RESET_TIMER:
       return INITIAL_STATE;
     default:

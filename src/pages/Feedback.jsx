@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import FeedBackMsg from '../components/FeedBackMsg';
 import Results from '../components/Results';
+import PlayAgainBtn from '../components/PlayAgainBtn';
+import RankingBtn from '../components/RankingBtn';
 
 function Feedback() {
   return (
@@ -10,6 +12,8 @@ function Feedback() {
       <Header />
       <FeedBackMsg />
       <Results />
+      <RankingBtn />
+      <PlayAgainBtn />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import {
   REQUEST_TRIVIA_QUESTIONS,
   QUESTIONS_REQUEST_SUCESS,
   QUESTIONS_REQUEST_FAILURE,
+  RESET_GAME,
 } from '../actions/actions';
 
 const INITIAL_STATE = {
@@ -17,6 +18,8 @@ const triviaInfoReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: action.loading, data: [...action.data] };
     case QUESTIONS_REQUEST_FAILURE:
       return { ...state, loading: action.loading, data: action.data };
+    case RESET_GAME:
+      return INITIAL_STATE;
     default:
       return state;
   }

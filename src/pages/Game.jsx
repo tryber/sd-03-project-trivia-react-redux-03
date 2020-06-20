@@ -9,25 +9,42 @@ import {
   nextQuestion,
   resetTimer,
 } from '../actions/actionsCreators';
+import hashedMail from '../services/encrypt_mail';
 import Header from '../components/Header';
 import TriviaCard from '../components/TriviaCard';
 import NextButton from '../components/NextButton';
-import Timer from '../components/Timer';
+import '../styles/Game.css';
 
-function updatePlayerInfo(score, assertions, name, email) {
-  const state = {
-    player: {
-      name,
-      assertions,
-      score,
-      gravatarEmail: email,
-    },
-  };
-  const stringfyState = JSON.stringify(state);
-  localStorage.setItem('state', stringfyState);
-}
-
+// local storage ainda não passa no teste
 class Game extends Component {
+  static async updatePlayerInfo(score, assertions, name, email) {
+    const storedGameState = await JSON.parse(localStorage.getItem('state') || '{}');
+    const state = {
+      player: {
+        name,
+        assertions,
+        score,
+        gravatarEmail: email,
+      },
+    };
+    const updateGameState = { ...storedGameState, ...state };
+    const stringfyState = JSON.stringify(updateGameState);
+    return localStorage.setItem('state', stringfyState);
+  }
+
+  static async updateRankingInfo(name, score, email) {
+    const storedRanking = await JSON.parse(localStorage.getItem('ranking') || '[]');
+    const hash = hashedMail(email);
+    const ranking = {
+      name,
+      score,
+      picture: `https://www.gravatar.com/avatar/${hash}?d=https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3`,
+    };
+    const updateRanking = [...storedRanking, ranking];
+    const stringifyRanking = JSON.stringify(updateRanking);
+    return localStorage.setItem('ranking', stringifyRanking);
+  }
+
   constructor(props) {
     super(props);
 
@@ -40,6 +57,7 @@ class Game extends Component {
     );
     this.clickOnCorrect = this.clickOnCorrect.bind(this);
     this.clickOnWrong = this.clickOnWrong.bind(this);
+    this.updatePlayerRank = this.updatePlayerRank.bind(this);
   }
 
   componentDidMount() {
@@ -49,13 +67,16 @@ class Game extends Component {
       categoryID,
       difficulty,
       type,
-      score,
-      assertions,
+      isLogged,
       userName,
       userEmail,
+      score,
+      assertions,
     } = this.props;
-    updatePlayerInfo(score, assertions, userName, userEmail);
-    getTriviaQuestions(token, categoryID, difficulty, type);
+    Game.updatePlayerInfo(score, assertions, userName, userEmail);
+    return isLogged
+      ? getTriviaQuestions(token, categoryID, difficulty, type)
+      : console.error('Not Logged');
   }
 
   updateQuestionIndexAndTimer() {
@@ -86,13 +107,22 @@ class Game extends Component {
     }
   }
 
-  clickOnCorrect() {
+  async clickOnCorrect() {
     const {
-      score, assertions, correctOption, userName, userEmail,
+      score,
+      assertions,
+      correctOption,
+      userName,
+      userEmail,
     } = this.props;
-    const updatedScore = this.updateScore(score);
+    const updatedScore = await this.updateScore(score);
     const updatedAssertions = assertions + 1;
-    updatePlayerInfo(updatedScore, updatedAssertions, userName, userEmail);
+    await Game.updatePlayerInfo(
+      updatedScore,
+      updatedAssertions,
+      userName,
+      userEmail,
+    );
     return correctOption(updatedScore, updatedAssertions);
   }
 
@@ -101,16 +131,19 @@ class Game extends Component {
     return wrongOption();
   }
 
+  updatePlayerRank() {
+    const { userName, userEmail, score } = this.props;
+    return Game.updateRankingInfo(userName, score, userEmail);
+  }
+
   render() {
     const { questionIndex } = this.state;
-    const {
-      isLogged, loading, triviaData, answeredQuestion,
-    } = this.props;
+    const { isLogged, loading, triviaData, answeredQuestion } = this.props;
     if (isLogged) {
       return loading ? (
         <h1>Loading...</h1>
       ) : (
-        <main>
+        <main className="game-container">
           <Header />
           <TriviaCard
             data={triviaData[questionIndex]}
@@ -122,13 +155,17 @@ class Game extends Component {
             <NextButton
               condition={questionIndex === triviaData.length - 1}
               onClick={this.updateQuestionIndexAndTimer}
+              onGameEnd={this.updatePlayerRank}
             />
           )}
-          <Timer />
         </main>
       );
     }
-    return (<h1><Link to="/">Oops! Please, log to play!</Link></h1>);
+    return (
+      <h1>
+        <Link to="/">Oops! Please, log to play!</Link>
+      </h1>
+    );
   }
 }
 
@@ -174,10 +211,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTriviaQuestions: (token,
     categoryID,
     difficulty,
-    type) => dispatch(fetchingTriviaQuestions(token,
-    categoryID,
-    difficulty,
-    type)),
+    type) => dispatch(fetchingTriviaQuestions(token, categoryID, difficulty, type)),
   correctOption: (score, assertions) => dispatch(correctAnswer(score, assertions)),
   wrongOption: () => dispatch(wrongAnswer()),
   nextTriviaCard: () => dispatch(nextQuestion()),

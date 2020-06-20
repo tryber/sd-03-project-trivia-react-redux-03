@@ -1,4 +1,4 @@
-import { SET_USER_LOGIN } from '../actions/actions';
+import { SET_USER_LOGIN, RESET_USER_LOGIN } from '../actions/actions';
 
 const initialInfo = {
   userEmail: '',
@@ -15,7 +15,8 @@ const userInfoReducer = (state = initialInfo, action) => {
         ...data,
         isLogged: true,
       };
-
+    case RESET_USER_LOGIN:
+      return { ...state, isLogged: false };
     default:
       return state;
   }

@@ -1,3 +1,45 @@
+.trivia-button {
+  background: #4d4d4d;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  margin: 10px 0;
+  padding: 15px;
+  text-transform: uppercase;
+  transition: all 0.3 ease;
+  width: 100%;
+}
+
+.trivia-card {
+  background: white;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  margin: 25px auto 100px;
+  max-width: 50vw;
+  padding: 45px;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.trivia-data {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  margin: 6px 0;
+  padding: 15px;
+  width: 100%;
+}
+
+.trivia-question {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px 0;
+  padding: 15px;
+  width: 100%;
+}
+
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
 }
