@@ -3,6 +3,7 @@ import {
   QUESTIONS_REQUEST_SUCESS,
   QUESTIONS_REQUEST_FAILURE,
   SET_USER_LOGIN,
+  RESET_USER_LOGIN,
   CORRECT_ANSWER,
   WRONG_ANSWER,
   RESET_GAME,
@@ -47,6 +48,10 @@ export const setUserInfo = (data) => ({
   data,
 });
 
+export const resetUserLogin = () => ({
+  type: RESET_USER_LOGIN,
+});
+
 export const correctAnswer = (score, assertions) => ({
   type: CORRECT_ANSWER,
   score,
@@ -69,8 +74,9 @@ export const nextQuestion = () => ({
   type: NEXT_QUESTION,
 });
 
-export const setTimer = () => ({
+export const setTimer = (number) => ({
   type: SET_TIMER,
+  timer: number,
 });
 
 export const resetTimer = () => ({

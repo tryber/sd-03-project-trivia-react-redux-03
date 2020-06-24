@@ -20,10 +20,10 @@ export default function App() {
       </header>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/game" component={Game} />
-        <Route exact path="/feedback" component={Feedback} />
-        <Route exact path="/ranking" component={Ranking} />
-        <Route exact path="/settings" component={Settings} />
+        <Route path="/game" component={Game} />
+        <Route path="/feedback" component={Feedback} />
+        <Route path="/ranking" component={Ranking} />
+        <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </div>

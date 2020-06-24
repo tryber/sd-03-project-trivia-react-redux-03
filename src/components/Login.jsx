@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { getTriviaToken } from '../services/endpoints_API';
-import { setUserInfo } from '../actions/actionsCreators';
+import { setUserInfo, resetGame, resetTimer } from '../actions/actionsCreators';
 import '../styles/Login.css';
 
 class Login extends React.Component {
@@ -15,6 +15,14 @@ class Login extends React.Component {
       userName: '',
       token: '',
     };
+  }
+
+  componentDidMount() {
+    const { resetGameState, resetGameTimer } = this.props;
+    localStorage.removeItem('state');
+    localStorage.removeItem('token');
+    resetGameState();
+    resetGameTimer();
   }
 
   handleStateChange(field, value) {
@@ -93,7 +101,7 @@ class Login extends React.Component {
     const { userLogged } = this.props;
     const renderComponent = !userLogged
       ? (
-        <div className="login-form">
+        <div className="login-page">
           <div className="form">
             <Link
               className="label"
@@ -121,6 +129,8 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  resetGameState: PropTypes.func.isRequired,
+  resetGameTimer: PropTypes.func.isRequired,
   setUserInfoStore: PropTypes.func.isRequired,
   userLogged: PropTypes.bool.isRequired,
 };
@@ -130,6 +140,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  resetGameState: () => dispatch(resetGame()),
+  resetGameTimer: () => dispatch(resetTimer()),
   setUserInfoStore: (userData) => dispatch(setUserInfo(userData)),
 });
 
